@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="-720 284.276 613.712 391.5899" width="613.712" height="391.5899">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica Neue" font-size="12" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.11.2 
+    <dc:date>2019-09-09 17:36:14 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_1" fill-opacity="1" stroke-opacity="1" stroke-dasharray="none" stroke="none" fill="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1: Layer 1">
+      <title>Layer 1</title>
+      <g id="Group_131">
+        <g id="Line_58">
+          <line x1="-578.75" y1="568.39016" x2="-578.75" y2="479.5" stroke="#e6007a" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="2"/>
+        </g>
+        <g id="Line_57">
+          <line x1="-361.58923" y1="662.39016" x2="-361.58923" y2="580.7072" stroke="#e6007a" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="2"/>
+        </g>
+        <g id="Line_56">
+          <line x1="-469.6341" y1="663.39016" x2="-469.6341" y2="581.7072" stroke="#e6007a" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="2"/>
+        </g>
+        <g id="Graphic_48">
+          <path d="M -705.5 468.5 L -451 468.5 C -446.5817 468.5 -443 472.0817 -443 476.5 L -443 505 C -443 509.4183 -446.5817 513 -451 513 L -705.5 513 C -709.9183 513 -713.5 509.4183 -713.5 505 L -713.5 476.5 C -713.5 472.0817 -709.9183 468.5 -705.5 468.5 Z" fill="white"/>
+          <path d="M -705.5 468.5 L -451 468.5 C -446.5817 468.5 -443 472.0817 -443 476.5 L -443 505 C -443 509.4183 -446.5817 513 -451 513 L -705.5 513 C -709.9183 513 -713.5 509.4183 -713.5 505 L -713.5 476.5 C -713.5 472.0817 -709.9183 468.5 -705.5 468.5 Z" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+          <text transform="translate(-708.5 481.526)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="40.034" y="15">Phala Network Parachain</tspan>
+          </text>
+        </g>
+        <g id="Graphic_40">
+          <path d="M -705.5 446 L -451 446 C -446.5817 446 -443 442.4183 -443 438 L -443 409.5 C -443 405.0817 -446.5817 401.5 -451 401.5 L -705.5 401.5 C -709.9183 401.5 -713.5 405.0817 -713.5 409.5 L -713.5 438 C -713.5 442.4183 -709.9183 446 -705.5 446 Z" fill="white"/>
+          <path d="M -705.5 446 L -451 446 C -446.5817 446 -443 442.4183 -443 438 L -443 409.5 C -443 405.0817 -446.5817 401.5 -451 401.5 L -705.5 401.5 C -709.9183 401.5 -713.5 405.0817 -713.5 409.5 L -713.5 438 C -713.5 442.4183 -709.9183 446 -705.5 446 Z" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+          <text transform="translate(-708.5 414.526)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="69.506" y="15">pLIBRA Contract</tspan>
+          </text>
+        </g>
+        <g id="Graphic_49">
+          <path d="M -705.5 535.5 L -234.5 535.5 C -230.08172 535.5 -226.5 539.0817 -226.5 543.5 L -226.5 572 C -226.5 576.4183 -230.08172 580 -234.5 580 L -705.5 580 C -709.9183 580 -713.5 576.4183 -713.5 572 L -713.5 543.5 C -713.5 539.0817 -709.9183 535.5 -705.5 535.5 Z" fill="#e6007a"/>
+          <text transform="translate(-708.5 548.526)" fill="#f5f5f5">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#f5f5f5" x="161.604" y="15">Polkadot Relay Chain</tspan>
+          </text>
+        </g>
+        <g id="Graphic_50">
+          <circle cx="-579.18295" cy="636.68295" r="34.1830036669797" fill="#fbc153"/>
+          <text transform="translate(-601.5293 627.45895)" fill="#f5f5f5">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#f5f5f5" x="6.498359" y="15">BTC</tspan>
+          </text>
+        </g>
+        <g id="Graphic_51">
+          <path d="M -705.5 343 L -451 343 C -446.5817 343 -443 339.41828 -443 335 L -443 306.5 C -443 302.08172 -446.5817 298.5 -451 298.5 L -705.5 298.5 C -709.9183 298.5 -713.5 302.08172 -713.5 306.5 L -713.5 335 C -713.5 339.41828 -709.9183 343 -705.5 343 Z" fill="#3e3587"/>
+          <text transform="translate(-708.5 311.526)" fill="#f5f5f5">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#f5f5f5" x="70.538" y="15">Libra Blockchain</tspan>
+          </text>
+        </g>
+        <g id="Graphic_52">
+          <title>Autorenew</title>
+          <path d="M -578.25 360.25 L -578.25 366.25 L -570.25 358.25 L -578.25 350.25 L -578.25 356.25 C -587.09 356.25 -594.25 363.41 -594.25 372.25 C -594.25 375.39 -593.33 378.31 -591.77 380.77 L -588.85 377.85 C -589.75 376.19 -590.25 374.27 -590.25 372.25 C -590.25 365.63 -584.87 360.25 -578.25 360.25 Z M -564.73 363.73 L -567.65 366.65 C -566.77 368.33 -566.25 370.23 -566.25 372.25 C -566.25 378.87 -571.63 384.25 -578.25 384.25 L -578.25 378.25 L -586.25 386.25 L -578.25 394.25 L -578.25 388.25 C -569.41 388.25 -562.25 381.09 -562.25 372.25 C -562.25 369.11 -563.17 366.19 -564.73 363.73 Z" fill="#3e3587"/>
+        </g>
+        <g id="Graphic_53">
+          <circle cx="-470" cy="636.68295" r="34.1830036669797" fill="#97a4b8"/>
+          <text transform="translate(-492.34636 627.45895)" fill="#f5f5f5">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#f5f5f5" x="7.090359" y="15">ETH</tspan>
+          </text>
+        </g>
+        <g id="Graphic_54">
+          <circle cx="-360.81705" cy="636.68295" r="34.1830036669797" fill="#efbf00"/>
+          <text transform="translate(-383.1634 622.34695)" fill="#f5f5f5">
+            <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="#f5f5f5" x=".56635925" y="11">Binance</tspan>
+            <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="#f5f5f5" x="10.790359" y="25.336">DEX</tspan>
+          </text>
+        </g>
+        <g id="Line_55">
+          <line x1="-578.707" y1="602.5033" x2="-578.31705" y2="574.5" stroke="#e6007a" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="2"/>
+        </g>
+        <g id="Group_69">
+          <g id="Graphic_60">
+            <title>Stay Primary Portrait</title>
+            <path d="M -138.154 289.296 L -158.154 289.276 C -160.354 289.276 -162.134 291.076 -162.134 293.276 L -162.134 329.276 C -162.134 331.476 -160.354 333.276 -158.154 333.276 L -138.154 333.276 C -135.954 333.276 -134.154 331.476 -134.154 329.276 L -134.154 293.276 C -134.154 291.076 -135.954 289.296 -138.154 289.296 Z M -138.154 325.276 L -158.154 325.276 L -158.154 297.276 L -138.154 297.276 L -138.154 325.276 Z" fill="#666"/>
+          </g>
+          <g id="Graphic_61">
+            <text transform="translate(-173.472 340.776)" fill="#3e3587">
+              <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="0" y="15">Calibra</tspan>
+            </text>
+          </g>
+        </g>
+        <g id="Group_68">
+          <g id="Graphic_59">
+            <title>Stay Primary Portrait</title>
+            <path d="M -138.154 451.02 L -158.154 451 C -160.354 451 -162.134 452.8 -162.134 455 L -162.134 491 C -162.134 493.2 -160.354 495 -158.154 495 L -138.154 495 C -135.954 495 -134.154 493.2 -134.154 491 L -134.154 455 C -134.154 452.8 -135.954 451.02 -138.154 451.02 Z M -138.154 487 L -158.154 487 L -158.154 459 L -138.154 459 L -138.154 487 Z" fill="#666"/>
+          </g>
+          <g id="Graphic_62">
+            <text transform="translate(-180 502.5)" fill="#e6007a">
+              <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#e6007a" x="0" y="15">Polkadot</tspan>
+              <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#e6007a" x="7.128" y="33.448">wallets</tspan>
+            </text>
+          </g>
+        </g>
+        <g id="Graphic_63">
+          <text transform="translate(-310.258 294.276)" fill="#b1001c">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#b1001c" x="32.304" y="15">KYC</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#b1001c" x="24.448" y="33.448">Traced</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#b1001c" x="3623768e-19" y="51.895996">Permissioned</tspan>
+          </text>
+        </g>
+        <g id="Graphic_64">
+          <text transform="translate(-395.172 310.75)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="6679102e-19" y="15">LIBRA</tspan>
+          </text>
+        </g>
+        <g id="Graphic_66">
+          <text transform="translate(-315.29 396.078)" fill="#16b575">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#16b575" x="23.256" y="15">NO KYC</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#16b575" x="27.416" y="33.448">Pravicy</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#16b575" x="0" y="51.895996">Permissionless</tspan>
+          </text>
+        </g>
+        <g id="Graphic_65">
+          <text transform="translate(-399.916 412.552)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="0" y="15">pLIBRA</tspan>
+          </text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

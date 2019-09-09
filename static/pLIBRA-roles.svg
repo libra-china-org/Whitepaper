@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="-1568.375 1002.5 629.875 394" width="629.875" height="394">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 8 3 0 0 0 9 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="975.0061" descent="-216.99524" font-weight="700">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue-Bold"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.11.2 
+    <dc:date>2019-09-09 19:35:34 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_1" fill-opacity="1" stroke-opacity="1" stroke-dasharray="none" stroke="none" fill="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1: Layer 1">
+      <title>Layer 1</title>
+      <g id="Group_358">
+        <g id="Graphic_320">
+          <path d="M -1001.3171 1077.8171 C -933.5608 1145.573 -933.5608 1255.427 -1001.3171 1323.1829 C -1069.073 1390.9392 -1178.927 1390.9392 -1246.6829 1323.1829 C -1314.4392 1255.427 -1314.4392 1145.573 -1246.6829 1077.8171 C -1178.927 1010.0608 -1069.073 1010.0608 -1001.3171 1077.8171" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1.0,4.0" stroke-width="1"/>
+        </g>
+        <g id="Graphic_321">
+          <path d="M -1038.5608 1116.9408 C -991.893 1163.6085 -991.893 1239.2715 -1038.5608 1285.9392 C -1085.2285 1332.607 -1160.8915 1332.607 -1207.5592 1285.9392 C -1254.227 1239.2715 -1254.227 1163.6085 -1207.5592 1116.9408 C -1160.8915 1070.273 -1085.2285 1070.273 -1038.5608 1116.9408" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1.0,4.0" stroke-width="1"/>
+        </g>
+        <g id="Line_333">
+          <line x1="-1395.0048" y1="1203.6696" x2="-1195.9951" y2="1201.342" stroke="#e6007a" stroke-linecap="butt" stroke-linejoin="round" stroke-width="10"/>
+        </g>
+        <g id="Graphic_319">
+          <circle cx="-1124" cy="1200.5" r="71.0001134510345" fill="white"/>
+          <circle cx="-1124" cy="1200.5" r="71.0001134510345" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <text transform="translate(-1175.8 1171.3038)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="#3e3587" x="30.472" y="16">Phala</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="#3e3587" x="19.36" y="35.46411">Network</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="#3e3587" x="9.295999" y="54.92822">Blockchain</tspan>
+          </text>
+        </g>
+        <g id="Graphic_322">
+          <circle cx="-1172.75" cy="1089.19" r="22.250035553317" fill="#3e3587"/>
+        </g>
+        <g id="Graphic_323">
+          <circle cx="-1006.75" cy="1222.25" r="22.2500355533172" fill="#3e3587"/>
+        </g>
+        <g id="Graphic_324">
+          <circle cx="-1184.75" cy="1304.75" r="22.250035553317" fill="#3e3587"/>
+        </g>
+        <g id="Graphic_325">
+          <circle cx="-980.9444" cy="1092.94" r="18.5000295611852" fill="white"/>
+          <circle cx="-980.9444" cy="1092.94" r="18.5000295611852" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_327">
+          <circle cx="-962.5" cy="1267" r="18.5000295611851" fill="white"/>
+          <circle cx="-962.5" cy="1267" r="18.5000295611851" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_328">
+          <circle cx="-1261.06" cy="1308.5" r="18.5000295611851" fill="white"/>
+          <circle cx="-1261.06" cy="1308.5" r="18.5000295611851" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_329">
+          <circle cx="-1130.5" cy="1026.5" r="18.5000295611851" fill="white"/>
+          <circle cx="-1130.5" cy="1026.5" r="18.5000295611851" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_330">
+          <circle cx="-1279" cy="1122.5" r="18.5000295611851" fill="white"/>
+          <circle cx="-1279" cy="1122.5" r="18.5000295611851" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_331">
+          <circle cx="-1093.5" cy="1372.5" r="18.5000295611851" fill="white"/>
+          <circle cx="-1093.5" cy="1372.5" r="18.5000295611851" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Group_351">
+          <g id="Graphic_347">
+            <path d="M -1397.4991 1135.9991 C -1359.6669 1173.8311 -1359.6669 1235.1689 -1397.4991 1273.0009 C -1435.3311 1310.8331 -1496.6689 1310.8331 -1534.5009 1273.0009 C -1572.3331 1235.1689 -1572.3331 1173.8311 -1534.5009 1135.9991 C -1496.6689 1098.1669 -1435.3311 1098.1669 -1397.4991 1135.9991" stroke="#e6007a" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1.0,4.0" stroke-width="1"/>
+          </g>
+          <g id="Graphic_332">
+            <circle cx="-1466" cy="1204.5" r="71.0001134510345" fill="#e6007a"/>
+            <text transform="translate(-1517.8 1195.276)" fill="#f5f5f5">
+              <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#f5f5f5" x="19.944" y="15">Polkadot</tspan>
+            </text>
+          </g>
+          <g id="Graphic_346">
+            <circle cx="-1486.5" cy="1110.5" r="18.5000295611851" fill="#ff9932"/>
+          </g>
+          <g id="Graphic_345">
+            <circle cx="-1537.5" cy="1269.5" r="18.500029561185" fill="#97a4b8"/>
+          </g>
+          <g id="Graphic_344">
+            <circle cx="-1374.7258" cy="1234.5" r="18.5000295611851" fill="#efbf00"/>
+          </g>
+        </g>
+        <g id="Graphic_356">
+          <text transform="translate(-1092 1277.927)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="0" y="15">Gatekeepers</tspan>
+          </text>
+        </g>
+        <g id="Graphic_357">
+          <text transform="translate(-1028 1317)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="20250468e-20" y="15"> Miners</tspan>
+          </text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

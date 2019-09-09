@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="676.24485 282 605.75515 455.75" width="605.75515" height="455.75">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica" font-size="10" units-per-em="1000" underline-position="-75.68359" underline-thickness="49.316406" slope="0" x-height="522.9492" cap-height="717.28516" ascent="770.0195" descent="-229.98047" font-weight="400">
+      <font-face-src>
+        <font-face-name name="Helvetica"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica Neue" font-size="14" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.10.2 
+    <dc:date>2019-07-14 07:34:38 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_1" stroke-opacity="1" fill-opacity="1" stroke-dasharray="none" stroke="none" fill="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="676.24485" y="282" width="605.75515" height="455.75"/>
+    <g id="Canvas_1: Layer 1">
+      <title>Layer 1</title>
+      <g id="Group_132">
+        <g id="Line_126">
+          <path d="M 895.7562 482.3626 L 1237.0938 485.0194 C 1241.512 485.0538 1245.1214 481.50005 1245.1558 477.0819 C 1245.156 477.06115 1245.156 477.0404 1245.156 477.01964 L 1245.156 433.625" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="2"/>
+        </g>
+        <g id="Line_106">
+          <line x1="895.7562" y1="634" x2="895.7562" y2="545.10984" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="2"/>
+        </g>
+        <g id="Line_98">
+          <line x1="895.7562" y1="722.89016" x2="895.7562" y2="634" stroke="#e6007a" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="2"/>
+        </g>
+        <g id="Graphic_97">
+          <path d="M 685.74485 613 L 1106.2448 613 C 1110.6631 613 1114.2448 616.5817 1114.2448 621 L 1114.2448 649.5 C 1114.2448 653.9183 1110.6631 657.5 1106.2448 657.5 L 685.74485 657.5 C 681.3266 657.5 677.74485 653.9183 677.74485 649.5 L 677.74485 621 C 677.74485 616.5817 681.3266 613 685.74485 613 Z" fill="white"/>
+          <path d="M 685.74485 613 L 1106.2448 613 C 1110.6631 613 1114.2448 616.5817 1114.2448 621 L 1114.2448 649.5 C 1114.2448 653.9183 1110.6631 657.5 1106.2448 657.5 L 685.74485 657.5 C 681.3266 657.5 677.74485 653.9183 677.74485 649.5 L 677.74485 621 C 677.74485 616.5817 681.3266 613 685.74485 613 Z" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+          <text transform="translate(682.74485 625.25)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="120.81" y="15"> Phala Network Parachain</tspan>
+          </text>
+        </g>
+        <g id="Graphic_89">
+          <path d="M 685.74485 577.25 L 1106.2448 577.25 C 1110.6631 577.25 1114.2448 573.6683 1114.2448 569.25 L 1114.2448 421 C 1114.2448 416.5817 1110.6631 413 1106.2448 413 L 685.74485 413 C 681.3266 413 677.74485 416.5817 677.74485 421 L 677.74485 569.25 C 677.74485 573.6683 681.3266 577.25 685.74485 577.25 Z" fill="white"/>
+          <path d="M 685.74485 577.25 L 1106.2448 577.25 C 1110.6631 577.25 1114.2448 573.6683 1114.2448 569.25 L 1114.2448 421 C 1114.2448 416.5817 1110.6631 413 1106.2448 413 L 685.74485 413 C 681.3266 413 677.74485 416.5817 677.74485 421 L 677.74485 569.25 C 677.74485 573.6683 681.3266 577.25 685.74485 577.25 Z" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+          <text transform="translate(682.74485 552.25)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="122.282" y="15">pLIBRA Contract Enclave</tspan>
+          </text>
+        </g>
+        <g id="Graphic_82">
+          <path d="M 687.3786 693.25 L 1105.1337 693.25 C 1109.552 693.25 1113.1337 696.8317 1113.1337 701.25 L 1113.1337 729.75 C 1113.1337 734.1683 1109.552 737.75 1105.1337 737.75 L 687.3786 737.75 C 682.9603 737.75 679.3786 734.1683 679.3786 729.75 L 679.3786 701.25 C 679.3786 696.8317 682.9603 693.25 687.3786 693.25 Z" fill="#e6007a"/>
+          <text transform="translate(684.3786 705.5)" fill="#f5f5f5">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#f5f5f5" x="134.98158" y="15">Polkadot Relay Chain</tspan>
+          </text>
+        </g>
+        <g id="Line_116">
+          <line x1="871.624" y1="481.9451" x2="786.5" y2="481.9451" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="2"/>
+        </g>
+        <g id="Group_107">
+          <g id="Graphic_110">
+            <rect x="851.9228" y="450.6986" width="101.33333" height="76.19156" fill="#dbe6f9"/>
+            <rect x="851.9228" y="450.6986" width="101.33333" height="76.19156" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+          </g>
+          <g id="Graphic_109">
+            <rect x="845.5895" y="444.3493" width="101.33333" height="76.19156" fill="#dbe6f9"/>
+            <rect x="845.5895" y="444.3493" width="101.33333" height="76.19156" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+          </g>
+          <g id="Graphic_108">
+            <rect x="839.2562" y="438" width="101.33333" height="76.19156" fill="#dbe6f9"/>
+            <rect x="839.2562" y="438" width="101.33333" height="76.19156" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+            <text transform="translate(844.2562 464.0958)" fill="#3e3587">
+              <tspan font-family="Helvetica" font-size="10" font-weight="400" fill="#3e3587" x="34.548503" y="10">Libra</tspan>
+              <tspan font-family="Helvetica" font-size="10" font-weight="400" fill="#3e3587" x="23.7111" y="22">Key Store</tspan>
+            </text>
+          </g>
+        </g>
+        <g id="Group_111">
+          <g id="Graphic_114">
+            <rect x="989.6667" y="450.6986" width="101.33333" height="76.19156" fill="#dbe6f9"/>
+            <rect x="989.6667" y="450.6986" width="101.33333" height="76.19156" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+          </g>
+          <g id="Graphic_113">
+            <rect x="983.3333" y="444.3493" width="101.33333" height="76.19156" fill="#dbe6f9"/>
+            <rect x="983.3333" y="444.3493" width="101.33333" height="76.19156" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+          </g>
+          <g id="Graphic_112">
+            <rect x="977" y="438" width="101.33333" height="76.19156" fill="#dbe6f9"/>
+            <rect x="977" y="438" width="101.33333" height="76.19156" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+            <text transform="translate(982 464.0958)" fill="#3e3587">
+              <tspan font-family="Helvetica" font-size="10" font-weight="400" fill="#3e3587" x="20.381022" y="10">ERC20-like</tspan>
+              <tspan font-family="Helvetica" font-size="10" font-weight="400" fill="#3e3587" x="20.65446" y="22">AccountDB</tspan>
+            </text>
+          </g>
+        </g>
+        <g id="Graphic_115">
+          <path d="M 705.5123 438 L 811.5123 438 C 813.7215 438 815.5123 439.79086 815.5123 442 L 815.5123 522.89016 C 815.5123 525.0993 813.7215 526.89016 811.5123 526.89016 L 705.5123 526.89016 C 703.3032 526.89016 701.5123 525.0993 701.5123 522.89016 L 701.5123 442 C 701.5123 439.79086 703.3032 438 705.5123 438 Z" fill="#3e3587"/>
+          <text transform="translate(706.5123 463.9971)" fill="#f5f5f5">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#f5f5f5" x="34.072" y="15">Libra</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#f5f5f5" x="11.4" y="33.448">Light Client</tspan>
+          </text>
+        </g>
+        <g id="Graphic_117">
+          <path d="M 685.74485 326.5 L 1106.2448 326.5 C 1110.6631 326.5 1114.2448 322.91828 1114.2448 318.5 L 1114.2448 290 C 1114.2448 285.58172 1110.6631 282 1106.2448 282 L 685.74485 282 C 681.3266 282 677.74485 285.58172 677.74485 290 L 677.74485 318.5 C 677.74485 322.91828 681.3266 326.5 685.74485 326.5 Z" fill="#3e3587"/>
+          <text transform="translate(682.74485 294.25)" fill="#f5f5f5">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#f5f5f5" x="153.538" y="15">Libra Blockchain</tspan>
+          </text>
+        </g>
+        <g id="Group_120">
+          <g id="Graphic_118">
+            <path d="M 830.0463 408.3125 L 822.9661 408.3125 L 822.9661 353.63765 L 813.2562 353.63765 L 826.5062 331.1875 L 839.7562 353.63765 L 830.0463 353.63765 Z" fill="#3e3587"/>
+          </g>
+          <g id="Graphic_119">
+            <path d="M 969.5463 331.1875 L 962.4661 331.1875 L 962.4661 385.86235 L 952.7562 385.86235 L 966.0062 408.3125 L 979.2562 385.86235 L 969.5463 385.86235 Z" fill="#3e3587"/>
+          </g>
+        </g>
+        <g id="Graphic_121">
+          <text transform="translate(850 361.25)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="14" font-weight="400" fill="#3e3587" x="0" y="13">Signed Tx</tspan>
+          </text>
+        </g>
+        <g id="Graphic_122">
+          <text transform="translate(988.7562 353.358)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="14" font-weight="400" fill="#3e3587" x="0" y="13">Chain State</tspan>
+            <tspan font-family="Helvetica Neue" font-size="14" font-weight="400" fill="#3e3587" x="10.129" y="29.392">w/ Proof</tspan>
+          </text>
+        </g>
+        <g id="Line_125">
+          <path d="M 1114.2448 305.94876 L 1237.457 306.9078 C 1241.8509 306.942 1245.3947 310.51357 1245.3947 314.90755 L 1245.3947 356.25" stroke="#3e3587" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="2"/>
+        </g>
+        <g id="Group_128">
+          <g id="Graphic_127">
+            <rect x="1209" y="362" width="73" height="78.06575" fill="white"/>
+          </g>
+          <g id="Graphic_123">
+            <title>Supervisor Account</title>
+            <path d="M 1257.4654 389.78725 C 1260.9498 389.78725 1263.7524 386.95935 1263.7524 383.475 C 1263.7524 379.9906 1260.9498 377.16273 1257.4654 377.16273 C 1253.981 377.16273 1251.1532 379.9906 1251.1532 383.475 C 1251.1532 386.95935 1253.981 389.78725 1257.4654 389.78725 Z M 1238.5287 387.26234 C 1242.72 387.26234 1246.0781 383.87897 1246.0781 379.68763 C 1246.0781 375.4963 1242.72 372.11292 1238.5287 372.11292 C 1234.3373 372.11292 1230.954 375.4963 1230.954 379.68763 C 1230.954 383.87897 1234.3373 387.26234 1238.5287 387.26234 Z M 1257.4654 394.83705 C 1252.8449 394.83705 1243.5785 397.15996 1243.5785 401.78054 L 1243.5785 407.46157 L 1271.3524 407.46157 L 1271.3524 401.78054 C 1271.3524 397.15996 1262.086 394.83705 1257.4654 394.83705 Z M 1238.5287 392.31215 C 1232.6456 392.31215 1220.8543 395.2663 1220.8543 401.1493 L 1220.8543 407.46157 L 1238.5287 407.46157 L 1238.5287 401.78054 C 1238.5287 399.63437 1239.3619 395.87226 1244.5127 393.0191 C 1242.316 392.56464 1240.1951 392.31215 1238.5287 392.31215 Z" fill="#666"/>
+          </g>
+          <g id="Graphic_124">
+            <text transform="translate(1225.3674 416.89234)" fill="black">
+              <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="7851497e-19" y="15">Users</tspan>
+            </text>
+          </g>
+        </g>
+        <g id="Graphic_129">
+          <text transform="translate(1129.4902 456.4701)" fill="#3e3587">
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="36.432" y="15">Req</tspan>
+            <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="#3e3587" x="0" y="51.448">Resp w/ Proof</tspan>
+          </text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
