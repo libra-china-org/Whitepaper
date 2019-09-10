@@ -1,6 +1,8 @@
-#    Phala Network: A confidential smart contract network based on Polkadot (Draft)
+#    Phala Network
 
-Authors: Hang Yin, Shunfan Zhou, Jun Jiang
+<div class="subtitle">A confidential smart contract network based on Polkadot (Draft)</div>
+<p style="text-align: center">Sept 10, 2019</p>
+<p style="text-align: center">Hang Yin, Shunfan Zhou, Jun Jiang</p>
 
 [TOC]
 
@@ -100,7 +102,6 @@ There are a few roles involved in the protocol.
 <img src="./static/pLIBRA-roles.svg" style="height: 250px" />
 
 <div style="text-align: center">Fig. Roles in the protocol</div>
-
 ### 4.1. Worker Node Registration
 
 All the Worker Nodes are required to be registered on the blockchain before participating in mining or Gatekeeper election.
