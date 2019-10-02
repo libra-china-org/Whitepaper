@@ -1,0 +1,6 @@
+phala-paper.*
+
+!phala-paper.tex
+!tex/
+!img/
+!*.tex
