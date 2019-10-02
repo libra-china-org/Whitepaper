@@ -15,8 +15,12 @@ Phala Network aims to build a platform for general-purpose privacy-preserving Tu
 
     \item \textbf{Availability.}
     There must not be a single point of failure such as disconnection of the miner.
+
+    \item \textbf{Interoperability.}
+    Contracts can interoperate with each other and maybe external blockchains.
 \end{icompact}
 \zhou{We may add inter-operatablity to distinguish our work with Ekiden.}
+\hang{Added.}
 
 The existing TEE solutions, e.g., Intel SGX, can only prevent the leakage of sensitive information during the execution of \textit{isolated} programs, and provide no guarantee on availability or verification of input data. Thus it requires a carefully-designed infrastructure to integrate TEE into blockchain to meet the requirements above.
 
@@ -79,9 +83,9 @@ There are a few roles involved in the protocol.
 
 \begin{figure}
     \centering \footnotesize
-    % \includegraphics[width=\columnwidth]{img/pLIBRA-sgxra}
+    \includegraphics[width=\columnwidth]{img/pLIBRA-roles}
     \caption{Roles in the protocol.}
-    \label{fig:overview}
+    \label{fig:roles}
 \end{figure}
 
 \subsection{Worker Node Registration}
@@ -94,16 +98,18 @@ Remote attestation provides a building block to verify the execution as well as 
     \centering \footnotesize
     \includegraphics[width=.7\columnwidth]{img/pLIBRA-communication}
     \caption{RA and communication. \zhou{as commented by W3F guy: there can be man-in-the-middle attack between user and miner so we need some certificate-like mechanism to prove the identity of miner, I think RA receipt just acts as certificate in our system.}}
-    \label{fig:overview}
+    \label{fig:communication}
 \end{figure}
 
-1. Worker node  $n$  (i.e. Miner or Gatekeeper) calls \texttt{pRuntime.GetIdentity} to generate a key pair as an identity $I_n(pk_n, sk_n)$.  $sk_n$ is kept inside the enclave and $pk_n$ is revealed to the node.
+\begin{enumerate}
+    \item Worker node  $n$  (i.e. Miner or Gatekeeper) calls \texttt{pRuntime.GetIdentity} to generate a key pair as an identity $I_n(pk_n, sk_n)$.  $sk_n$ is kept inside the enclave and $pk_n$ is revealed to the node.
 
-2. The worker node calls \texttt{pRuntime.GetRAQuote} to generate a remote attestation quote $q$ with the commitment to $pk_n$ and other necessary metadata.
+    \item The worker node calls \texttt{pRuntime.GetRAQuote} to generate a remote attestation quote $q$ with the commitment to $pk_n$ and other necessary metadata.
 
-3. The worker node submits $q$ to Remote Attestation Service and get the signed quotes $q_{signed}$.
+    \item The worker node submits $q$ to Remote Attestation Service and get the signed quotes $q_{signed}$.
 
-4. The worker node submits $(q_{signed}, pk_n)$ to the blockchain. The blockchain then accepts and stores the information after validation.
+    \item The worker node submits $(q_{signed}, pk_n)$ to the blockchain. The blockchain then accepts and stores the information after validation.
+\end{enumerate}
 
 With the identity registered, a TLS-like channel between the requester and the target \texttt{pRuntime} can be established. The identities published on the blockchain can serve as the PKI to avoid MitM attack. Note that not only the client can talk to \texttt{pRuntime} securely, but a secure channel between two runtime is also possible.
 
@@ -115,17 +121,19 @@ The metadata submitted to the blockchain also contains sufficient information to
 
 Genesis Node assists the launch of the blockchain until it finishes:
 
-1. Before the genesis block, the Genesis Node runs \texttt{pRuntime.Bootstrap} to generate a key pair as the identity of the node, and a symmetric key, namely Genesis Identity $I_g(pk_g, sk_g)$ and Genesis Key $k_g$. The runtime reveals $pk_g$ but keeps $sk_g$ and $k_g$ privately.
+\begin{enumerate}
+    \item Before the genesis block, the Genesis Node runs \texttt{pRuntime.Bootstrap} to generate a key pair as the identity of the node, and a symmetric key, namely Genesis Identity $I_g(pk_g, sk_g)$ and Genesis Key $k_g$. The runtime reveals $pk_g$ but keeps $sk_g$ and $k_g$ privately.
 
-2. Start the blockchain with $pk_g$. In this stage $pk_g$ is published in the genesis block and is used for other worker nodes to establish secure channels to the Genesis Node. $k_g$ is kept inside the Genesis Node and is used to store secrets necessary to run the network on the blockchain. A list of the initial Phala token distribution is hard-coded in the genesis block.
+    \item Start the blockchain with $pk_g$. In this stage $pk_g$ is published in the genesis block and is used for other worker nodes to establish secure channels to the Genesis Node. $k_g$ is kept inside the Genesis Node and is used to store secrets necessary to run the network on the blockchain. A list of the initial Phala token distribution is hard-coded in the genesis block.
 
-3. The blockchain is at pre-launch phase after the genesis block. Governance module is enabled but other modules including Confidential Contract are still disabled until the Gatekeepers are elected.
+    \item The blockchain is at pre-launch phase after the genesis block. Governance module is enabled but other modules including Confidential Contract are still disabled until the Gatekeepers are elected.
 
-4. Worker Nodes who want to participate in Gatekeeper election can follow the \textbf{Worker Node Registration} scheme to register their identities on the blockchain. Then $n_{gk}$ (a chain parameter between tens to hundreds) Gatekeepers will be elected during the pre-launch phase. This can be done via an on-chain Polkadot-style NPoS validator election (see Appendix II for details).
+    \item Worker Nodes who want to participate in Gatekeeper election can follow the \textbf{Worker Node Registration} scheme to register their identities on the blockchain. Then $n_{gk}$ (a chain parameter between tens to hundreds) Gatekeepers will be elected during the pre-launch phase. This can be done via an on-chain Polkadot-style NPoS validator election (see Appendix II for details).
 
-5. When the election is finished, the Gatekeepers send a request to the Genesis Node for $k_g$ through a TLS connection. The Genesis Node only answers the requests from the selected Gatekeeper.
+    \item When the election is finished, the Gatekeepers send a request to the Genesis Node for $k_g$ through a TLS connection. The Genesis Node only answers the requests from the selected Gatekeeper.
 
-6. The Genesis Node retires and self destroys when all the Gatekeepers are ready.
+    \item The Genesis Node retires and self destroys when all the Gatekeepers are ready.
+\end{enumerate}
 
 So far $k_g$ has been distributed to all the Gatekeeper's runtime and Gatekeepers have their identity registered on the blockchain. Then $k_g$ will be used to deploy nodes and contracts in the future.
 
@@ -143,11 +151,13 @@ As Gatekeepers store the root key and need to be always online, they have to mee
 
 The bytecode of the compiled contract is published on the blockchain and then loaded by a user-specified miner. The Gatekeepers generate a symmetric encryption key for each newly published contract. The key is shared with the corresponding miner for state encryption. More specifically:
 
-1. The developer publish the contract to the blockchain
-2. Once Gatekeepers notice the contract, they generate a corresponding contract key $k_c$ for contract state encryption
-3. Gatekeepers save $k_c$ to the blockchain as a part of the chainstate encrypted with Root Key $k_r$
-4. The developer finds an available miner to load the contract. The developer can either run his miner so that no extra fee is needed, or rent one from a resource market (see "Economic Design Paper" for more details).
-5. The miner runtime connects to Gatekeeper through a TLS connection and asks for $k_c$ by \texttt{pRuntime.GetContractKey}.
+\begin{enumerate}
+    \item The developer publish the contract to the blockchain
+    \item Once Gatekeepers notice the contract, they generate a corresponding contract key $k_c$ for contract state encryption
+    \item Gatekeepers save $k_c$ to the blockchain as a part of the chainstate encrypted with Root Key $k_r$
+    \item The developer finds an available miner to load the contract. The developer can either run his miner so that no extra fee is needed, or rent one from a resource market (see "Economic Design Paper" for more details).
+    \item The miner runtime connects to Gatekeeper through a TLS connection and asks for $k_c$ by \texttt{pRuntime.GetContractKey}.
+\end{enumerate}
 
 The miner's \texttt{pRuntime} will use $k_c$ to encrypt the contract state and save it to the blockchain periodically. We will discuss the details in "Execute the Contract" and "State Recover" section.
 
@@ -155,12 +165,14 @@ The miner's \texttt{pRuntime} will use $k_c$ to encrypt the contract state and s
 
 The Gatekeepers are re-elected periodically according to the election rule (Appendix II). Let $G_{n-1}$ and $G_n$ be the Gatekeepers set before and after the election at round $n$. The root keys will be rotated as follows:
 
-1. The old Gatekeeper set $G_{n-1}$ validates the new set $G_n$
-2. $G_{n-1}$ decrypts the state of the Gatekeepers with the old root key $k_r^{(n-1)}$
-3. $G_n$ generates a new root key $k_r^{(n)}$ and retrieve the state from $G_{n-1}$
-4. $G_n$ encrypts the state with $k_r^{(n)}$ and stores it to the blockchain
-5. The runtime of the retired Gatekeepers will halt and destroy $k_r^{(n-1)}$
-6. $G_n$ generates new contract keys and notify the miner to rotate the keys. Miners' runtime then will ask $G_n$ for contract key by \texttt{pRuntime.GateContractKey}
+\begin{enumerate}
+    \item The old Gatekeeper set $G_{n-1}$ validates the new set $G_n$
+    \item $G_{n-1}$ decrypts the state of the Gatekeepers with the old root key $k_r^{(n-1)}$
+    \item $G_n$ generates a new root key $k_r^{(n)}$ and retrieve the state from $G_{n-1}$
+    \item $G_n$ encrypts the state with $k_r^{(n)}$ and stores it to the blockchain
+    \item The runtime of the retired Gatekeepers will halt and destroy $k_r^{(n-1)}$
+    \item $G_n$ generates new contract keys and notify the miner to rotate the keys. Miners' runtime then will ask $G_n$ for contract key by \texttt{pRuntime.GateContractKey}
+\end{enumerate}
 
 Root key and contract key rotation ensures the forward secrecy of the confidential state (for both Gatekeeper state and contracts state). The keys for the obsolete data are destroyed once the rotation is done.
 
@@ -173,14 +185,16 @@ The contract state is determined by the write commands which have multiple sourc
 \begin{figure}
     \centering \footnotesize
     \includegraphics[width=.7\columnwidth]{img/pLIBRA-execute}
-    \caption{Execute the Contract.}
+    \caption{Execute the contract.}
     \label{fig:contract-execution}
 \end{figure}
 
-1. The miner (host) ingests the ingressive events to the runtime by calling \texttt{pRuntime.SyncBlockchain}. The incoming events are paired with cryptographic evidence which is validated by a light-weight Substrate client inside \texttt{pRuntime}. It ensures the integrity of the incoming events.
-2. The runtime picks out the events targeting the contract deployed inside and feeds the contract. The execution of the contract produces a view of the \texttt{Chainstate}, namely \texttt{Chainview}
-3. At any time, users can query \texttt{Chainview} by \texttt{pRuntime.Query}. The identity of the caller is attached to the queries so that the contract can decide whether to answer or not based on its customized authorization policy. The response to the query includes the query result as well as a commitment to the current blockchain state (e.g. height) and the contract state. In other words, all the outputs are subject to a certain blockchain state.
-4. The runtime also produces various side-effects which is accessible by \texttt{pRuntime.DumpSideEffect}. A basic kind of side-effect is the encrypted contract state update produced periodically by \texttt{pRuntime}. With the full contract state, a new miner doesn't need to sync the data by replaying the entire blockchain history. Another kind of side-effects is outgoing messages targeting other contracts or blockchains, namely \textbf{Egressing Events}. The ability to post messages to external entities is the building block for contract interoperability. The submitted events are eventually dispatched to the target contract, or other blockchains by the Polkadot ICMP (Interchain Message Passing, https://research.web3.foundation/en/latest/polkadot/ICMP/). Miners (host) are responsible to post the side-effects back to the blockchain.
+\begin{enumerate}
+    \item The miner (host) ingests the ingressive events to the runtime by calling \texttt{pRuntime.SyncBlockchain}. The incoming events are paired with cryptographic evidence which is validated by a light-weight Substrate client inside \texttt{pRuntime}. It ensures the integrity of the incoming events.
+    \item The runtime picks out the events targeting the contract deployed inside and feeds the contract. The execution of the contract produces a view of the \texttt{Chainstate}, namely \texttt{Chainview}
+    \item At any time, users can query \texttt{Chainview} by \texttt{pRuntime.Query}. The identity of the caller is attached to the queries so that the contract can decide whether to answer or not based on its customized authorization policy. The response to the query includes the query result as well as a commitment to the current blockchain state (e.g. height) and the contract state. In other words, all the outputs are subject to a certain blockchain state.
+    \item The runtime also produces various side-effects which is accessible by \texttt{pRuntime.DumpSideEffect}. A basic kind of side-effect is the encrypted contract state update produced periodically by \texttt{pRuntime}. With the full contract state, a new miner doesn't need to sync the data by replaying the entire blockchain history. Another kind of side-effects is outgoing messages targeting other contracts or blockchains, namely \textbf{Egressing Events}. The ability to post messages to external entities is the building block for contract interoperability. The submitted events are eventually dispatched to the target contract, or other blockchains by the Polkadot ICMP (Interchain Message Passing, https://research.web3.foundation/en/latest/polkadot/ICMP/). Miners (host) are responsible to post the side-effects back to the blockchain.
+\end{enumerate}
 
 To invoke a contract the user needs to generate a shared secret key with the miner who runs the contract. This can be done via a non-interactive Diffie-Hellman key exchange scheme with her private key and the miner's registered public key (https://www.sqi.at/resources/Schindler-2019-CIW-Distributed-Key-Generation-with-Ethereum-Smart-Contracts.pdf). The key is used for future communication and then the user can submit the encrypted payload to the blockchain. The invocation events are processed by \texttt{pRuntime} once they arrive at the miner node.
 
@@ -200,7 +214,7 @@ As mentioned in section "Execute the Contract", one of the side-effects produced
 
 Both Gatekeepers and miners are required to keep the responsiveness to keep the functionality of Phala Network. Gatekeepers have to maintain a high level of responsiveness because the root key is kept inside the Gatekeepers runtime and must be available at any time. As long as Gatekeepers can serve the contract key for miners, the availability of the contracts can be guaranteed. So unresponsive miners are not as harmful as unresponsive Gatekeepers to the system.
 
-% We adopt a Polkadot-like unresponsiveness detection algorithm (https://research.web3.foundation/en/latest/polkadot/slashing/amounts/#unresponsiveness). Both Gatekeepers and miners produce side-effects by their runtime. They have to at least post the state updates periodically to the blockchain within an interval. So all the submitted side-effects can be used as a counter of the online activities. Then we can determine if a node $n$ is unresponsive in an era by
+We adopt a Polkadot-like unresponsiveness detection algorithm (https://research.web3.foundation/en/latest/polkadot/slashing/amounts/#unresponsiveness). Both Gatekeepers and miners produce side-effects by their runtime. They have to at least post the state updates periodically to the blockchain within an interval. So all the submitted side-effects can be used as a counter of the online activities. Then we can determine if a node $n$ is unresponsive in an era by
 $$
     c_n < \frac{1}{4} \max\limits_{n'}{c_{n'}}
 $$
@@ -211,39 +225,53 @@ where $c_n$ is the activity counter for node $n$ and $n'$ is all the connected w
 
 Security fallbacks:
 
-- Alternative TEE hardware: Though we use Intel SGX as the reference for the current design, we don't make any assumptions about the hardware. Potential TEE hardware includes AMD SEV, ARM Turstzone, and some open-source implementations in progress. When we support any alternatives the different TEE can work together transparently.
-- Contract key backup by secret sharing scheme: To avoid catastrophes where Intel SGX breaks entirely (e.g. Intel bans all the Remote Attestation request from our side), we can utilize a secret sharing scheme to distribute the Root Key to the Gatekeepers, or maybe two generations of the Gatekeepers. In such a case, we can wait for the deployment of an alternative TEE system. Then the secret holders can collaborate to ingest the key to recover the execution of Phala Network.
+\begin{icompact}
+    \item Alternative TEE hardware: Though we use Intel SGX as the reference for the current design, we don't make any assumptions about the hardware. Potential TEE hardware includes AMD SEV, ARM Turstzone, and some open-source implementations in progress. When we support any alternatives the different TEE can work together transparently.
+    \item Contract key backup by secret sharing scheme: To avoid catastrophes where Intel SGX breaks entirely (e.g. Intel bans all the Remote Attestation request from our side), we can utilize a secret sharing scheme to distribute the Root Key to the Gatekeepers, or maybe two generations of the Gatekeepers. In such a case, we can wait for the deployment of an alternative TEE system. Then the secret holders can collaborate to ingest the key to recover the execution of Phala Network.
+\end{icompact}
 
 Optimizations:
 
-% - Event batching & async state commitment
-- State storage prune
-- Layer 2 state sharing
+\begin{icompact}
+    % \item Event batching & async state commitment
+    \item State storage prune
+    \item Layer 2 state sharing
+\end{icompact}
 
 
 \section{The First Application: pLIBRA}
 
 pLIBRA is a free and privacy-preserving Libra Coin built on Polkadot. It includes
 
-- A bridge connecting Polkadot and Libra
-- A privacy-preserving token pLIBRA 1:1 pegged to Libra Coin (KYC not needed)
-- A confidential-preserving cross-chain interoperable DApp ecosystem for Libra users
+\begin{icompact}
+    \item A bridge connecting Polkadot and Libra
+    \item A privacy-preserving token pLIBRA 1:1 pegged to Libra Coin (KYC not needed)
+    \item A confidential-preserving cross-chain interoperable DApp ecosystem for Libra users
+\end{icompact}
 
-<img src="./static/pLIBRA-structure.svg" style="height: 300px"/>
-
-<div style="text-align: center">Fig. pLIBRA Overview</div>
+\begin{figure}
+    \centering \footnotesize
+    \includegraphics[width=.7\columnwidth]{img/pLIBRA-structure}
+    \caption{pLIBRA overview.}
+    \label{fig:plibra}
+\end{figure}
 
 \subsection{System Design}
 
 pLIBRA is implemented as a Confidential Contract on Phala Network. It implements a Libra light client and a ERC20-like token inside the Confidential Contract.
 
-- \textbf{Libra Light Client}: A full light client which is capable to validate the Merkle proof of the chain state and sign transactions.
-- \textbf{Key Store}: Stores the private keys for the collateral Libra accounts (i.e. \textit{bank account}).
-- \textbf{AccountDB}: Stores the pLIBRA accounts and the balance.
+\begin{icompact}
+    \item \textbf{Libra Light Client}: A full light client which is capable to validate the Merkle proof of the chain state and sign transactions.
+    \item \textbf{Key Store}: Stores the private keys for the collateral Libra accounts (i.e. \textit{bank account}).
+    \item \textbf{AccountDB}: Stores the pLIBRA accounts and the balance.
+\end{icompact}
 
-<img src="./static/pLIBRA-contract.svg" style="height: 300px"/>
-
-<div style="text-align: center">Fig. pLIBRA Architecture</div>
+\begin{figure}
+    \centering \footnotesize
+    \includegraphics[width=.7\columnwidth]{img/pLIBRA-contract}
+    \caption{pLIBRA Architecture.}
+    \label{fig:plibra}
+\end{figure}
 
 Confidential Contract allows the client to manage privkeys and sign transactions without utilizing computing-intensive cryptographic. Libra users can send their Libra Coin to pLIBRA's bank account and get 1:1 pLIBRA token and vice versa.
 
@@ -251,10 +279,12 @@ As the information of the pLIBRA accounts is hidden inside the enclave, the pLIB
 
 At the time of writing, Libra only has very limited smart contract functionality (only whitelisted contracts are allowed). So here we present a naive way to store Libra without the need to employ an advanced feature like multisig or smart contract. When the smart contract is launched on Libra, we can further improve the security of our design by adopting a multisig-style collateral.
 
-- \textbf{Init}. During the init phase, pLIBRA contract generates a key pair and reveal the public key. Then an account on Libra blockchain serving as the \textbf{Bank Account} is registered with the public key. This is a one-off task done by pLIBRA team. Note that pLIBRA team doesn't have any control over the bank account because the private key is always kept inside the Confidential Contract.
-- \textbf{Sync}. The Libra light client is responsible to parse and validate the blockchain data from Libra network. Though at the beginning pLIBRA team will proxy Libra blockchain data to pLIBRA, the blockchain data can be fed by any user. We expect that the pLIBRA end-users will proxy the Libra blockchain data to get their transaction executed. This can be done by a shared library in the wallets. (Side notes: Libra doesn't have a typical "blockchain" data structure. By saying blockchain data, we refer to the Libra ledger updates.)
-- \textbf{Link Account}. To deposit Libra to the system for pLIBRA, linking the accounts is needed. The user links the address of his Libra account and a pLIBRA account with the signature signed by the key pair of both accounts. It proves that both accounts are owned by the user. After the link operation, deposit and withdraw can only happen between the linked accounts.
-- \textbf{Deposit}. The user sends some Libra coins to the \textbf{Bank Account} and tells pLIBRA the transaction. Once it's confirmed by the Libra light client inside the contract, the same amount of pLIBRA will be issued to the linked pLIBRA account.
-- \textbf{Withdraw}. The user can request to withdraw pLIBRA. The requested amount of pLIBRA is burned and it will produce a transaction to release the same amount of Libra to the linked address. To broadcast the transaction to Libra network, the pLIBRA contract maintains a sequence of the tx. When the withdraw requester asks for his withdraw tx, it returns all the "not yet executed" tx. The requester has to broadcast all the pending tx until his tx are executed.
-- \textbf{Transfer}. Transferring pLIBRA token is an internal change in AccountDB. Users can transfer pLIBRA freely like any ERC-20 token. The transfer happens inside the pLIBRA contract and only the owner can access the transaction information.
-- \textbf{Query}. Users can query the balance and the transaction history of his account. The query operation is a read of Chainview and thus it's not needed to interact with the blockchain.
+\begin{icompact}
+    \item \textbf{Init}. During the init phase, pLIBRA contract generates a key pair and reveal the public key. Then an account on Libra blockchain serving as the \textbf{Bank Account} is registered with the public key. This is a one-off task done by pLIBRA team. Note that pLIBRA team doesn't have any control over the bank account because the private key is always kept inside the Confidential Contract.
+    \item \textbf{Sync}. The Libra light client is responsible to parse and validate the blockchain data from Libra network. Though at the beginning pLIBRA team will proxy Libra blockchain data to pLIBRA, the blockchain data can be fed by any user. We expect that the pLIBRA end-users will proxy the Libra blockchain data to get their transaction executed. This can be done by a shared library in the wallets. (Side notes: Libra doesn't have a typical "blockchain" data structure. By saying blockchain data, we refer to the Libra ledger updates.)
+    \item \textbf{Link Account}. To deposit Libra to the system for pLIBRA, linking the accounts is needed. The user links the address of his Libra account and a pLIBRA account with the signature signed by the key pair of both accounts. It proves that both accounts are owned by the user. After the link operation, deposit and withdraw can only happen between the linked accounts.
+    \item \textbf{Deposit}. The user sends some Libra coins to the \textbf{Bank Account} and tells pLIBRA the transaction. Once it's confirmed by the Libra light client inside the contract, the same amount of pLIBRA will be issued to the linked pLIBRA account.
+    \item \textbf{Withdraw}. The user can request to withdraw pLIBRA. The requested amount of pLIBRA is burned and it will produce a transaction to release the same amount of Libra to the linked address. To broadcast the transaction to Libra network, the pLIBRA contract maintains a sequence of the tx. When the withdraw requester asks for his withdraw tx, it returns all the "not yet executed" tx. The requester has to broadcast all the pending tx until his tx are executed.
+    \item \textbf{Transfer}. Transferring pLIBRA token is an internal change in AccountDB. Users can transfer pLIBRA freely like any ERC-20 token. The transfer happens inside the pLIBRA contract and only the owner can access the transaction information.
+    \item \textbf{Query}. Users can query the balance and the transaction history of his account. The query operation is a read of Chainview and thus it's not needed to interact with the blockchain.
+\end{icompact}
