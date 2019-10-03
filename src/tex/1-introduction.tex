@@ -1,15 +1,27 @@
 \section{Introduction}
 
-Nowadays the security of the permissionless blockchain is typically guaranteed by state replication over consensus algorithms. Though this approach works well for blockchain, it also means everything on the blockchain is public, which brings a problem: confidential information cannot be handled by the blockchain.
+Nowadays the security of the permissionless blockchain is typically guaranteed by state replication over consensus algorithms. Though this approach works well for blockchain, it also means that everything on the blockchain is \textit{public}, which brings a problem: confidential information cannot be handled by the blockchain.
+\zsf{
+    The lack of confidentiality greatly limits the usage of blockchain in many scenarios. For example, blahblahblah...
+}
 \zhou{We need some real-world cases under which confidentiality is vital.}
 \hang{todo: processing business data on-chain, DeFi position privacy, GDRP complaince...}
 
-Several projects addressed the privacy problem. Monero and Zcash implemented private transaction by ring signature~\cite{monero} and zk-SNARK~\cite{zcash} technology but it's limited to cryptocurrencies and hard to be extended to general-purpose smart contracts. MPC (multi-party computing) can theoretically run arbitrary programs without revealing intermediate state to the participants but also introduces a performance overhead of $10^6$ times~\cite{cheng2019ekiden}.
+Several methodologies have been proposed to address the privacy problem. Monero and Zcash implemented private transaction by ring signature~\cite{monero} and zk-SNARK~\cite{zcash} technology, but their methods can only provide privacy for cryptocurrencies and are hard to be extended to general-purpose smart contracts. MPC (Multi-Party Computing) can theoretically run arbitrary programs without revealing intermediate states to the participants, with the expense of a performance overhead of $10^6$ times~\cite{cheng2019ekiden}, which makes it impractical for real world use cases.
 
-Currently, pure software solutions are not viable. A new approach is to utilize special hardware. TEE (Trusted Execution Environment)~\cite{teewiki} is a special area in some processors that provides a higher level of security including isolated execution, code integration, and state confidentiality. Naive TEE as a computing platform has several shortages such as the lack of a reliable time source and availability guarantee.
-\zhou{There should be more shortage examples.}
-\hang{Added: reliable time source.}
+% Currently, pure software solutions are not viable.
+A new approach is to utilize special hardware, i.e. Trusted Execution Environment (TEE)~\cite{teewiki} . TEE is a special area in some processors that provides a higher level of security including isolated execution, code integration, and state confidentiality. Naive TEE as a computing platform has several shortages, such as the lack of a reliable time source and availability guarantee.
+% \zhou{There should be more shortage examples.}
+% \hang{Added: reliable time source.}
 
-Ekiden~\cite{cheng2019ekiden} fixed these problems by introducing a TEE-blockchain hybrid architecture and implemented high performance confidential smart contract. However, contracts in Ekiden are isolated, meaning the contracts cannot interoperate with each other, and cannot interoperate with external blockchains.
+Ekiden~\cite{cheng2019ekiden} fixed these problems by introducing a TEE-blockchain hybrid architecture and implemented high performance confidential smart contract platform. However, contracts in Ekiden are isolated, which means the contracts cannot interoperate with each other, let alone external blockchains.
+\zhou{We should emphisize the importance of interoperability. Please add some cross-chain use cases.}
+\zsf{
+    Interoperability is a keystone of modern smart contracts.
+    For example, XXX of the top 20 contracts in Ethereum, the largest smart contract platform in the world, rely on functions in at least one other contract.
+    Without interoperability, developers have to implement every function they need by themselves.
+    What's more, the use of self-defined tokens, one of the most common cases in smart contract usages, is unachivable if all the contracts cannot access the token contract.
+}
+
 
 In this paper, we present Phala Network, a novel cross-chain interoperable confidential smart contract network as a Polkadot parachain. We introduce an \textit{Event Sourcing / Command Query Responsibility Segregation}~\cite{eventsourcing, cqrs} architecture into a TEE-blockchain hybrid system to achieve cross-chain interoperability for confidential smart contracts. We further designed a Libra-Polkadot bridge to implement a privacy-preserving Libra Coin by confidential contract.
