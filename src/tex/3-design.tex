@@ -5,7 +5,7 @@ Phala Network aims to build a platform for general-purpose privacy-preserving Tu
 
 \begin{icompact}
     \item \textbf{Confidentiality.}
-    Unlike the existing blockchains for smart contracts, Phala Network avoids the leakage of any input, output, or intermediate state of Confidential Contract. Only authorized queries to the contract will be answered.
+    Unlike the existing blockchains for smart contracts, Phala Network avoids the leakage of any input, output, or intermediate state of confidential contract. Only authorized queries to the contract will be answered.
 
     \item \textbf{Code Integrity.}
     Anyone can verify that an output is produced by a specific smart contract published on the blockchain.
@@ -37,7 +37,7 @@ $$
 Since the state transition process happens inside the enclave, any of its intermediate states remains invisible to outside.
 We can further encrypt the reached state and input event to prevent the attackers from inferring the internal state of contract with event replay.
 
-Let $cs_n$ be the cipher of $s_n$ and $ce_n$ be the cipher of $e_n$, the state transition function of a Confidential Contract $p$ can be represented as:
+Let $cs_n$ be the cipher of $s_n$ and $ce_n$ be the cipher of $e_n$, the state transition function of a confidential contract $p$ can be represented as:
 
 \begin{align}
     cs_n              & = p(cs_{n-1}, ce_n)                                                             \\
@@ -46,13 +46,13 @@ Let $cs_n$ be the cipher of $s_n$ and $ce_n$ be the cipher of $e_n$, the state t
 
 where $\mathrm{Enc}$ and $\mathrm{Dec}$ can be carefully-chosen symmetric encryption and decryption functions subject to the contract.
 
-Unlike the existing smart contract, a Confidential Contract doesn't expose any information outside the enclave by default. To answer authorized queries, we introduce a query function $q$ which takes the current encrypted state $cs_n$, query parameters $paras$ and user's identity $I$ (usually a pubkey) as input and returns the response $r$:
+Unlike the existing smart contract, a confidential contract doesn't expose any information outside the enclave by default. To answer authorized queries, we introduce a query function $q$ which takes the current encrypted state $cs_n$, query parameters $paras$ and user's identity $I$ (usually a pubkey) as input and returns the response $r$:
 
 $$
     r = q(cs_n, paras, I)
 $$
 
-The Confidential Contract must first validate the identity of the user and then respond to her query. Apart from the queries from users, the contract may also accept a special query producing side effects. The side effects include the egressing data that can be posted back to the blockchain by miners.
+The confidential contract must first validate the identity of the user and then respond to her query. Apart from the queries from users, the contract may also accept a special query producing side effects. The side effects include the egressing data that can be posted back to the blockchain by miners.
 
 In this design, the executor (the enclave) is stateless, which greatly simplifies the design of the system. The events on the blockchain then become the canonical source of the inputs to the contract, which implies \textit{Event Sourcing} design pattern. We further utilized the idea of \textit{Command Query Responsibility Segregation} in the design of the protocol.
 \zhou{We'd better explain these two concepts in Background section.}
@@ -66,19 +66,19 @@ There are a few roles involved in the protocol.
     \item \textbf{Users.}
     Users invoke, query and deploy smart contracts. Users interact with smart contracts via \textbf{Blockchain} and \textbf{Worker Nodes}. They can verify the blockchain as well as the cryptographic evidence on the blockchain independently by running a light client or full node. Special hardware is not needed.
     \item \textbf{Worker Nodes.}
-    Worker Nodes run Confidential Contracts in TEE compatible hardware. Worker Nodes are off-chain. In each node, a special program called \texttt{pRuntime} is deployed to the enclave. The runtime has a builtin VM to run contracts. It also cooperates with the blockchain to support the contracts in full life cycle. Worker Nodes can be further divided into three roles:
+    Worker Nodes run confidential contracts in TEE compatible hardware. Worker Nodes are off-chain. In each node, a special program called \texttt{pRuntime} is deployed to the enclave. The runtime has a builtin VM to run contracts. It also cooperates with the blockchain to support the contracts in full life cycle. Worker Nodes can be further divided into three roles:
     \begin{icompact}
         \item \textbf{Genesis Node.}
         Genesis Node helps bootstrap the network and set up the cryptographic configuration. There's only one Genesis Node and it's destroyed after the launch of Phala Network.
         \item \textbf{Gatekeepers.}
         Gatekeepers manage the secrets to ensure the availability and security of the network. Gatekeepers are dynamically elected on the blockchain and they stake a large amount of Phala token. They are rewarded for being online and slashed in case of misbehavior because there must be a certain number of functional Gatekeepers running at any time.
         \item \textbf{Miners.}
-        Miners execute the Confidential Contracts. They get paid by selling their computing resources to the users. Unlike Gatekeepers, Miners need to stake a small amount of the Phala token and can join and exit the network as they want.
+        Miners execute the confidential contracts. They get paid by selling their computing resources to the users. Unlike Gatekeepers, Miners need to stake a small amount of the Phala token and can join and exit the network as they want.
     \end{icompact}
     \item \textbf{Remote Attestation Service.}
     Remote Attestation Service is a public service to validate if a Worker Node has deployed \texttt{pRuntime} correctly. The cryptographic evidence produced by the service can prove a certain output is produced by \texttt{pRuntime} running inside a TEE. IAS is Intel SGX's remote attestation service implementation.
     \item \textbf{Blockchain.}
-    Blockchain is the backbone of Phala Network. It stores the identities of the Worker Nodes, the published Confidential Contracts, the encrypted contract state, and the invocation transactions from users and other blockchains. When plugged into a Polkadot parachain slot, it's capable to interoperate with other blockchains through the Polkadot relay chain.
+    Blockchain is the backbone of Phala Network. It stores the identities of the Worker Nodes, the published confidential contracts, the encrypted contract state, and the invocation transactions from users and other blockchains. When plugged into a Polkadot parachain slot, it's capable to interoperate with other blockchains through the Polkadot relay chain.
 \end{icompact}
 
 \begin{figure}
@@ -126,7 +126,7 @@ Genesis Node assists the launch of the blockchain until it finishes:
 
     \item Start the blockchain with $pk_g$. In this stage $pk_g$ is published in the genesis block and is used for other worker nodes to establish secure channels to the Genesis Node. $k_g$ is kept inside the Genesis Node and is used to store secrets necessary to run the network on the blockchain. A list of the initial Phala token distribution is hard-coded in the genesis block.
 
-    \item The blockchain is at pre-launch phase after the genesis block. Governance module is enabled but other modules including Confidential Contract are still disabled until the Gatekeepers are elected.
+    \item The blockchain is at pre-launch phase after the genesis block. Governance module is enabled but other modules including confidential contract are still disabled until the Gatekeepers are elected.
 
     \item Worker Nodes who want to participate in Gatekeeper election can follow the \textbf{Worker Node Registration} scheme to register their identities on the blockchain. Then $n_{gk}$ (a chain parameter between tens to hundreds) Gatekeepers will be elected during the pre-launch phase. This can be done via an on-chain Polkadot-style NPoS validator election (see Appendix II for details).
 
@@ -258,7 +258,7 @@ pLIBRA is a free and privacy-preserving Libra Coin built on Polkadot. It include
 
 \subsection{System Design}
 
-pLIBRA is implemented as a Confidential Contract on Phala Network. It implements a Libra light client and a ERC20-like token inside the Confidential Contract.
+pLIBRA is implemented as a confidential contract on Phala Network. It implements a Libra light client and a ERC20-like token inside the confidential contract.
 
 \begin{icompact}
     \item \textbf{Libra Light Client}: A full light client which is capable to validate the Merkle proof of the chain state and sign transactions.
@@ -273,14 +273,14 @@ pLIBRA is implemented as a Confidential Contract on Phala Network. It implements
     \label{fig:plibra}
 \end{figure}
 
-Confidential Contract allows the client to manage privkeys and sign transactions without utilizing computing-intensive cryptographic. Libra users can send their Libra Coin to pLIBRA's bank account and get 1:1 pLIBRA token and vice versa.
+Confidential contract allows the client to manage privkeys and sign transactions without utilizing computing-intensive cryptographic. Libra users can send their Libra Coin to pLIBRA's bank account and get 1:1 pLIBRA token and vice versa.
 
 As the information of the pLIBRA accounts is hidden inside the enclave, the pLIBRA token gets privacy-preserving feature like Monero for free. Phala Network is designed to be launched as a parachain on Polkadot. So pLIBRA also gets the ability to interoperate with all the blockchains connected to Polkadot.
 
 At the time of writing, Libra only has very limited smart contract functionality (only whitelisted contracts are allowed). So here we present a naive way to store Libra without the need to employ an advanced feature like multisig or smart contract. When the smart contract is launched on Libra, we can further improve the security of our design by adopting a multisig-style collateral.
 
 \begin{icompact}
-    \item \textbf{Init}. During the init phase, pLIBRA contract generates a key pair and reveal the public key. Then an account on Libra blockchain serving as the \textbf{Bank Account} is registered with the public key. This is a one-off task done by pLIBRA team. Note that pLIBRA team doesn't have any control over the bank account because the private key is always kept inside the Confidential Contract.
+    \item \textbf{Init}. During the init phase, pLIBRA contract generates a key pair and reveal the public key. Then an account on Libra blockchain serving as the \textbf{Bank Account} is registered with the public key. This is a one-off task done by pLIBRA team. Note that pLIBRA team doesn't have any control over the bank account because the private key is always kept inside the confidential contract.
     \item \textbf{Sync}. The Libra light client is responsible to parse and validate the blockchain data from Libra network. Though at the beginning pLIBRA team will proxy Libra blockchain data to pLIBRA, the blockchain data can be fed by any user. We expect that the pLIBRA end-users will proxy the Libra blockchain data to get their transaction executed. This can be done by a shared library in the wallets. (Side notes: Libra doesn't have a typical "blockchain" data structure. By saying blockchain data, we refer to the Libra ledger updates.)
     \item \textbf{Link Account}. To deposit Libra to the system for pLIBRA, linking the accounts is needed. The user links the address of his Libra account and a pLIBRA account with the signature signed by the key pair of both accounts. It proves that both accounts are owned by the user. After the link operation, deposit and withdraw can only happen between the linked accounts.
     \item \textbf{Deposit}. The user sends some Libra coins to the \textbf{Bank Account} and tells pLIBRA the transaction. Once it's confirmed by the Libra light client inside the contract, the same amount of pLIBRA will be issued to the linked pLIBRA account.

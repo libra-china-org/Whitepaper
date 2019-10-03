@@ -29,7 +29,7 @@ Next, the generated attestation quote is sent to the Intel Remote Attestation Se
 
 Finally, the attestation quote signed by Intel serves as the proof of successful execution. It proves that specific code has been run inside an SGX enclave and produces certain output, which implies the confidentiality and the correctness of the execution. The proof can be published and validated by anyone with generic hardware.
 
-Intel SGX and the Remote Attestation protocol is the foundation of Confidential Contract. Except for Intel SGX, there are also alternative implementation choices like AMD SEV and ARM TrustZone.
+Intel SGX and the Remote Attestation protocol is the foundation of confidential contract. Except for Intel SGX, there are also alternative implementation choices like AMD SEV and ARM TrustZone.
 
 ## 3. Confidential Contract
 
@@ -37,7 +37,7 @@ Phala Network aims to build a platform for general-purpose privacy-preserving Tu
 
 - Confidentiality
 
-   Unlike the existing blockchains for smart contracts, Phala Network avoids the leakage of any input, output, or intermediate state of Confidential Contract. Only authorized queries to the contract will be answered.
+   Unlike the existing blockchains for smart contracts, Phala Network avoids the leakage of any input, output, or intermediate state of confidential contract. Only authorized queries to the contract will be answered.
 
 - Code Integrity
 
@@ -66,7 +66,7 @@ $$
 Since the state transition process happens inside the enclave, any of its intermediate states remains invisible to outside.
 We can further encrypt the reached state and input event to prevent the attackers from inferring the internal state of contract with event replay.
 
-Let $cs_n$ be the cipher of $s_n$ and $ce_n$ be the cipher of $e_n$, the state transition function of a Confidential Contract $p$ can be represented as:
+Let $cs_n$ be the cipher of $s_n$ and $ce_n$ be the cipher of $e_n$, the state transition function of a confidential contract $p$ can be represented as:
 
 $$
 \begin{aligned}
@@ -77,13 +77,13 @@ $$
 
 where $\mathrm{Enc}$ and $\mathrm{Dec}$ can be carefully-chosen symmetric encryption and decryption functions subject to the contract.
 
-Unlike the existing smart contract, a Confidential Contract doesn't expose any information outside the enclave by default. To answer authorized queries, we introduce a query function $q$ which takes the current encrypted state $cs_n$, query parameters $paras$ and user's identity $I$ (usually a pubkey) as input and returns the response $r$:
+Unlike the existing smart contract, a confidential contract doesn't expose any information outside the enclave by default. To answer authorized queries, we introduce a query function $q$ which takes the current encrypted state $cs_n$, query parameters $paras$ and user's identity $I$ (usually a pubkey) as input and returns the response $r$:
 
 $$
 r = q(cs_n, paras, I)
 $$
 
-The Confidential Contract must first validate the identity of the user and then respond to her query. Apart from the queries from users, the contract may also accept a special query producing side effects. The side effects include the egressing data that can be posted back to the blockchain by miners.
+The confidential contract must first validate the identity of the user and then respond to her query. Apart from the queries from users, the contract may also accept a special query producing side effects. The side effects include the egressing data that can be posted back to the blockchain by miners.
 
 In this design, the executor (the enclave) is stateless, which greatly simplifies the design of the system. The events on the blockchain then become the canonical source of the inputs to the contract, which implies **Event Sourcing** design pattern. We further utilized the idea of **Command Query Responsibility Segregation** in the design of the protocol.
 
@@ -92,12 +92,12 @@ In this design, the executor (the enclave) is stateless, which greatly simplifie
 There are a few roles involved in the protocol.
 
 - **Users** invoke, query and deploy smart contracts. Users interact with smart contracts via **Blockchain** and **Worker Nodes**. They can verify the blockchain as well as the cryptographic evidence on the blockchain independently by running a light client or full node. Special hardware is not needed.
-- **Worker Nodes** run Confidential Contracts in TEE compatible hardware. Worker Nodes are off-chain. In each node, a special program called `pRuntime` is deployed to the enclave. The runtime has a builtin VM to run contracts. It also cooperates with the blockchain to support the contracts in full life cycle. Worker Nodes can be further divided into three roles:
+- **Worker Nodes** run confidential contracts in TEE compatible hardware. Worker Nodes are off-chain. In each node, a special program called `pRuntime` is deployed to the enclave. The runtime has a builtin VM to run contracts. It also cooperates with the blockchain to support the contracts in full life cycle. Worker Nodes can be further divided into three roles:
   - **Genesis Node** helps bootstrap the network and set up the cryptographic configuration. There's only one Genesis Node and it's destroyed after the launch of Phala Network.
   - **Gatekeepers** manage the secrets to ensure the availability and security of the network. Gatekeepers are dynamically elected on the blockchain and they stake a large amount of Phala token. They are rewarded for being online and maybe slashed in case of misbehavior because there must be a certain number of the Gatekeepers running at any time.
-  - **Miners** execute the Confidential Contracts. They get paid by selling their computing resources to the users. Unlike Gatekeepers, Miners need to stake just a small amount of the Phala token and can join & exit the network as they want.
+  - **Miners** execute the confidential contracts. They get paid by selling their computing resources to the users. Unlike Gatekeepers, Miners need to stake just a small amount of the Phala token and can join & exit the network as they want.
 - **Remote Attestation Service** is a public service to validate if a Worker Node has deployed `pRuntime` correctly. The cryptographic evidence produced by the service can prove a certain output is produced by `pRuntime` running inside a TEE. IAS is Intel SGX's remote attestation service implementation.
-- **Blockchain** is the backbone of Phala Network. It stores the identities of the Worker Nodes, the published Confidential Contracts, the encrypted contract state, and the invocation transactions from users and other blockchains. When plugged into a Polkadot parachain slot, it's capable to interoperate with other blockchains through the Polkadot relay chain.
+- **Blockchain** is the backbone of Phala Network. It stores the identities of the Worker Nodes, the published confidential contracts, the encrypted contract state, and the invocation transactions from users and other blockchains. When plugged into a Polkadot parachain slot, it's capable to interoperate with other blockchains through the Polkadot relay chain.
 
 <img src="./static/pLIBRA-roles.svg" style="height: 250px" />
 
@@ -128,7 +128,7 @@ Genesis Node assists the launch of the blockchain until it finishes:
 
 1. Before the genesis block, the Genesis Node runs `pRuntime.Bootstrap` to generate a key pair as the identity of the node, and a symmetric key, namely Genesis Identity $I_g(pk_g, sk_g)$ and Genesis Key $k_g$. The runtime reveals $pk_g$ but keeps $sk_g$ and $k_g$ privately.
 2. Start the blockchain with $pk_g$. In this stage $pk_g$ is published in the genesis block and is used for other worker nodes to establish secure channels to the Genesis Node. $k_g$ is kept inside the Genesis Node and is used to store secrets necessary to run the network on the blockchain. A list of the initial Phala token distribution is hard-coded in the genesis block.
-3. The blockchain is at pre-launch phase after the genesis block. Governance module is enabled but other modules including Confidential Contract are still disabled until the Gatekeepers are elected.
+3. The blockchain is at pre-launch phase after the genesis block. Governance module is enabled but other modules including confidential contract are still disabled until the Gatekeepers are elected.
 4. Worker Nodes who want to participate in Gatekeeper election can follow the **Worker Node Registration** scheme to register their identities on the blockchain. Then $n_{gk}$ (a chain parameter between tens to hundreds) Gatekeepers will be elected during the pre-launch phase. This can be done via an on-chain Polkadot-style NPoS validator election (see Appendix II for details).
 5. When the election is finished, the Gatekeepers send a request to the Genesis Node for $k_g$ through a TLS connection. The Genesis Node only answers the requests from the selected Gatekeeper.
 6. The Genesis Node retires and self destroys when all the Gatekeepers are ready.
@@ -232,7 +232,7 @@ pLIBRA is a free and privacy-preserving Libra Coin built on Polkadot. It include
 <div style="text-align: center">Fig. pLIBRA Overview</div>
 ### 6.1. System Design
 
-pLIBRA is implemented as a Confidential Contract on Phala Network. It implements a Libra light client and a ERC20-like token inside the Confidential Contract.
+pLIBRA is implemented as a confidential contract on Phala Network. It implements a Libra light client and a ERC20-like token inside the confidential contract.
 
 - **Libra Light Client**: A full light client which is capable to validate the Merkle proof of the chain state and sign transactions.
 - **Key Store**: Stores the private keys for the collateral Libra accounts (i.e. *bank account*).
@@ -241,13 +241,13 @@ pLIBRA is implemented as a Confidential Contract on Phala Network. It implements
 <img src="./static/pLIBRA-contract.svg" style="height: 300px"/>
 
 <div style="text-align: center">Fig. pLIBRA Architecture</div>
-Confidential Contract allows the client to manage privkeys and sign transactions without utilizing computing-intensive cryptographic. Libra users can send their Libra Coin to pLIBRA's bank account and get 1:1 pLIBRA token and vice versa.
+Confidential contract allows the client to manage privkeys and sign transactions without utilizing computing-intensive cryptographic. Libra users can send their Libra Coin to pLIBRA's bank account and get 1:1 pLIBRA token and vice versa.
 
 As the information of the pLIBRA accounts is hidden inside the enclave, the pLIBRA token gets privacy-preserving feature like Monero for free. Phala Network is designed to be launched as a parachain on Polkadot. So pLIBRA also gets the ability to interoperate with all the blockchains connected to Polkadot.
 
 At the time of writing, Libra only has very limited smart contract functionality (only whitelisted contracts are allowed). So here we present a naive way to store Libra without the need to employ an advanced feature like multisig or smart contract. When the smart contract is launched on Libra, we can further improve the security of our design by adopting a multisig-style collateral.
 
-- **Init**. During the init phase, pLIBRA contract generates a key pair and reveal the public key. Then an account on Libra blockchain serving as the **Bank Account** is registered with the public key. This is a one-off task done by pLIBRA team. Note that pLIBRA team doesn't have any control over the bank account because the private key is always kept inside the Confidential Contract.
+- **Init**. During the init phase, pLIBRA contract generates a key pair and reveal the public key. Then an account on Libra blockchain serving as the **Bank Account** is registered with the public key. This is a one-off task done by pLIBRA team. Note that pLIBRA team doesn't have any control over the bank account because the private key is always kept inside the confidential contract.
 - **Sync**. The Libra light client is responsible to parse and validate the blockchain data from Libra network. Though at the beginning pLIBRA team will proxy Libra blockchain data to pLIBRA, the blockchain data can be fed by any user. We expect that the pLIBRA end-users will proxy the Libra blockchain data to get their transaction executed. This can be done by a shared library in the wallets. (Side notes: Libra doesn't have a typical "blockchain" data structure. By saying blockchain data, we refer to the Libra ledger updates.)
 - **Link Account**. To deposit Libra to the system for pLIBRA, linking the accounts is needed. The user links the address of his Libra account and a pLIBRA account with the signature signed by the key pair of both accounts. It proves that both accounts are owned by the user. After the link operation, deposit and withdraw can only happen between the linked accounts.
 - **Deposit**. The user sends some Libra coins to the **Bank Account** and tells pLIBRA the transaction. Once it's confirmed by the Libra light client inside the contract, the same amount of pLIBRA will be issued to the linked pLIBRA account.
