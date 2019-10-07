@@ -11,16 +11,16 @@ Phala Network aims to build a platform for general-purpose privacy-preserving Tu
     Anyone can verify that an output is produced by a specific smart contract published on the blockchain.
 
     \item \textbf{State Consistency.}
-    Anyone can verify that an execution happened at a certain blockchain height, which implies the output of the execution is subject to a certain chainstate.
+    Anyone can verify that an execution happened at a certain blockchain height, which implies the output of the execution is subject to a certain chain state.
 
     \item \textbf{Availability.}
     There must not be a single point of failure such as disconnection of the miner.
 
     \item \textbf{Interoperability.}
-    Contracts can interoperate with each other and maybe external blockchains.
+    Contracts can interoperate with each other and external blockchains.
 \end{icompact}
-\zhou{We may add inter-operatablity to distinguish our work with Ekiden.}
-\hang{Added.}
+% \zhou{We may add inter-operatablity to distinguish our work with Ekiden.}
+% \hang{Added.}
 
 The existing TEE solutions, e.g., Intel SGX, can only prevent the leakage of sensitive information during the execution of \textit{isolated} programs, and provide no guarantee on availability or verification of input data. Thus it requires a carefully-designed infrastructure to integrate TEE into blockchain to meet the requirements above.
 
@@ -54,39 +54,49 @@ $$
 
 The confidential contract must first validate the identity of the user and then respond to her query. Apart from the queries from users, the contract may also accept a special query producing side effects. The side effects include the egressing data that can be posted back to the blockchain by miners.
 
-In this design, the executor (the enclave) is stateless, which greatly simplifies the design of the system. The events on the blockchain then become the canonical source of the inputs to the contract, which implies \textit{Event Sourcing} design pattern. We further utilized the idea of \textit{Command Query Responsibility Segregation} in the design of the protocol.
-\zhou{We'd better explain these two concepts in Background section.}
-
-
 \section{The Protocol}
 
-There are a few roles involved in the protocol.
+\begin{figure}[!t]
+    \centering \footnotesize
+    \includegraphics[width=\columnwidth]{img/pLIBRA-roles}
+    \caption{Roles in the protocol.}
+    \label{fig:roles}
+\end{figure}
+
+There are a few roles involved in the protocol as shown in Figure~\ref{fig:roles}.
 
 \begin{icompact}
     \item \textbf{Users.}
-    Users invoke, query and deploy smart contracts. Users interact with smart contracts via \textbf{Blockchain} and \textbf{Worker Nodes}. They can verify the blockchain as well as the cryptographic evidence on the blockchain independently by running a light client or full node. Special hardware is not needed.
+    Users invoke, query and deploy smart contracts. Users interact with smart contracts via \textbf{Blockchain} and \textbf{Worker Nodes}. They can verify the blockchain as well as the cryptographic evidence on the blockchain independently by running a light client or full node. No special hardware, i.e., TEE, is needed for users to use the confidential contracts.
     \item \textbf{Worker Nodes.}
-    Worker Nodes run confidential contracts in TEE compatible hardware. Worker Nodes are off-chain. In each node, a special program called \texttt{pRuntime} is deployed to the enclave. The runtime has a builtin VM to run contracts. It also cooperates with the blockchain to support the contracts in full life cycle. Worker Nodes can be further divided into three roles:
+    Worker Nodes run confidential contracts in TEE-compatible hardwares. Worker Nodes are off-chain. In each node, a special program called \pruntime is deployed to the enclave. The runtime has a builtin VM to run contracts. It also cooperates with the blockchain to support the contracts in full life cycle. Worker Nodes can be further divided into three roles:
     \begin{icompact}
         \item \textbf{Genesis Node.}
         Genesis Node helps bootstrap the network and set up the cryptographic configuration. There's only one Genesis Node and it's destroyed after the launch of Phala Network.
         \item \textbf{Gatekeepers.}
         Gatekeepers manage the secrets to ensure the availability and security of the network. Gatekeepers are dynamically elected on the blockchain and they stake a large amount of Phala token. They are rewarded for being online and slashed in case of misbehavior because there must be a certain number of functional Gatekeepers running at any time.
         \item \textbf{Miners.}
-        Miners execute the confidential contracts. They get paid by selling their computing resources to the users. Unlike Gatekeepers, Miners need to stake a small amount of the Phala token and can join and exit the network as they want.
+        Miners execute the confidential contracts. They get paid by providing their computing resources to the users. Unlike Gatekeepers, Miners only need to stake a small amount of the Phala token and can join and exit the network as they want.
     \end{icompact}
     \item \textbf{Remote Attestation Service.}
-    Remote Attestation Service is a public service to validate if a Worker Node has deployed \texttt{pRuntime} correctly. The cryptographic evidence produced by the service can prove a certain output is produced by \texttt{pRuntime} running inside a TEE. IAS is Intel SGX's remote attestation service implementation.
+    Remote Attestation Service is a public service to validate if a Worker Node has deployed \pruntime correctly. The cryptographic evidence produced by the service can prove a certain output is produced by \pruntime running inside a TEE. IAS~\cite{ias} is Intel SGX's remote attestation service implementation.
     \item \textbf{Blockchain.}
     Blockchain is the backbone of Phala Network. It stores the identities of the Worker Nodes, the published confidential contracts, the encrypted contract state, and the invocation transactions from users and other blockchains. When plugged into a Polkadot parachain slot, it's capable to interoperate with other blockchains through the Polkadot relay chain.
 \end{icompact}
 
-\begin{figure}
-    \centering \footnotesize
-    \includegraphics[width=\columnwidth]{img/pLIBRA-roles}
-    \caption{Roles in the protocol.}
-    \label{fig:roles}
-\end{figure}
+
+
+\subsection{System Design}
+
+We first propose an important property which works as the basis of the following system design.
+
+\noindent {\bf All worker nodes are non-Byzantine nodes.}
+As illustrated above, each worker node runs a special program \pruntime, which, as the name suggests, works as the runtime for confidential contracts.
+The \pruntime manages the connections to the blockchain and all the secrets to decrypt the contract states, and deployed contracts can only access these resources via the APIs of \pruntime.
+Since the integrity of \pruntime is guaranteed by the remote attestation service, this isolation promises that no Byzantine fault can happen unless both the TEE and \pruntime are compromised, and an adversarial worker node can only launch a Denial-of-Service attack, which can be further detected by our responsiveness monitoring protocol.
+
+In our system, the executors, i.e., miners, are stateless, which means the latest state of a confidential contract has to be got by sequentially executing all the input events on the blockchain or from a cached contract state and the events after that. All the inputs have to be first published to the blockchain and in this way, the blockchain works as the canonical source of contract inputs, which implies \textit{Event Sourcing} design pattern. We further utilized the idea of \textit{Command Query Responsibility Segregation} in the design of the protocol to accelerate the users' queries to the contracts.
+% \zhou{We'd better explain these two concepts in Background section.}
 
 \subsection{Worker Node and pRuntime}
 
@@ -224,7 +234,7 @@ $$
 $$
 where $c_n$ is the activity counter for node $n$ and $n'$ is all the connected worker nodes in the era. For the detailed design of slash, please refer to Economic Design Paper.
 
- 
+
 \section{Open Question}
 
 Security fallbacks:
