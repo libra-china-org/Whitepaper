@@ -17,14 +17,12 @@ Next, the generated attestation quote is sent to the Intel Remote Attestation Se
 
 Finally, the attestation quote signed by Intel serves as the proof of a successful execution. It proves that specific code has been run inside an SGX enclave and produces certain output, which implies the confidentiality and the correctness of the execution. The proof can be published and validated by anyone with generic hardware.
 
-Intel SGX and the Remote Attestation protocol is the foundation of confidential contract. Except for Intel SGX, there are also alternative implementation choices like AMD SEV~\cite{xxx} and ARM TrustZone~\cite{xxx}.
+Intel SGX and the Remote Attestation protocol is the foundation of confidential contract. Except for Intel SGX, there are also alternative implementation choices like AMD SEV~\cite{amdsev} and ARM TrustZone~\cite{armtrustzone}.
 
 \subsection{Event Sourcing and CQRS}
 
-% Event Sourcing means we use the blockchain to record events (tx) to retain their order.
-% CQRS means the commands (write ops) are put into the blockchain but the queries (read ops) can be made by runtime directly, improving the scalability of the contracts.
+Event Sourcing is a software design pattern. Instead of storing the latest state of the data, the events causing state transition are recorded in an append-only log. The events are timestamped and can be replayed to reconstruct the state of any time. Since the timestamped events, the state of the system is deterministic. Command Query Responsibility Segregation (CQRS) is a design pattern by which the read operations and write operations are handled separately. In a CQRS and Event Sourcing combined system, the write operations are recorded as the events and the read operations can be served by the current view of the state. This pattern make a system easy to scale up and avoid conflicts.
 
-\hang{Should we create a subsection for this? I don't think we have a lot to tell here.}
-\zhou{
-    We just clarify several problems here: What's Event Sourcing and CQRS? (Generally introduce) What problems we want to solve with the introduction of these technologies?
-}
+For native CPU performance and better security, a single or a small set of TEEs are bound to each confidential contract to execute it. By this design, the contract state is isolated from each other without consistency guarantee. It becomes a trouble for cross-contract and even cross-chain interoperability.
+
+While keeping a strong state consistency is hard, contracts can still communicate by passing messages on the premise that state transition is still deterministic. In an Event Sourcing / CQRS design, the commands can be initiated from users or contracts and are strictly timestamped on the blockchain. It guarantees the global state is deterministic and therefore enables message passing between contracts. Message passing is a primitive to implement higher level interoperability like contract invocation and token transferring. The read-only operations are not timestamped for better performance.
