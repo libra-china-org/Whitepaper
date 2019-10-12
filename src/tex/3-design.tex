@@ -112,7 +112,7 @@ Remote attestation provides a building block to verify the execution as well as 
 \end{figure}
 
 \begin{enumerate}
-    \item Worker node  $n$  (i.e. Miner or Gatekeeper) calls \texttt{pRuntime.GetIdentity} to generate a key pair as an identity $I_n(pk_n, sk_n)$.  $sk_n$ is kept inside the enclave and $pk_n$ is revealed to the node.
+    \item Worker node $n$ (i.e.\,Miner or Gatekeeper) calls \texttt{pRuntime.GetIdentity} to generate a key pair as an identity $I_n(pk_n, sk_n)$.  $sk_n$ is kept inside the enclave and $pk_n$ is revealed to the node.
 
     \item The worker node calls \texttt{pRuntime.GetRAQuote} to generate a remote attestation quote $q$ with the commitment to $pk_n$ and other necessary metadata.
 
@@ -202,7 +202,7 @@ The contract state is determined by the write commands which have multiple sourc
 \begin{enumerate}
     \item The miner (host) ingests the ingressive events to the runtime by calling \texttt{pRuntime.SyncBlockchain}. The incoming events are paired with cryptographic evidence which is validated by a light-weight Substrate client inside \pruntime. It ensures the integrity of the incoming events.
     \item The runtime picks out the events targeting the contract deployed inside and feeds the contract. The execution of the contract produces a view of the \texttt{Chainstate}, namely \texttt{Chainview}
-    \item At any time, users can query \texttt{Chainview} by \texttt{pRuntime.Query}. The identity of the caller is attached to the queries so that the contract can decide whether to answer or not based on its customized authorization policy. The response to the query includes the query result as well as a commitment to the current blockchain state (e.g. height) and the contract state. In other words, all the outputs are subject to a certain blockchain state.
+    \item At any time, users can query \texttt{Chainview} by \texttt{pRuntime.Query}. The identity of the caller is attached to the queries so that the contract can decide whether to answer or not based on its customized authorization policy. The response to the query includes the query result as well as a commitment to the current blockchain state (e.g.\,height) and the contract state. In other words, all the outputs are subject to a certain blockchain state.
     \item The runtime also produces various side-effects which is accessible by \texttt{pRuntime.DumpSideEffect}. A basic kind of side-effect is the encrypted contract state update produced periodically by \pruntime. With the full contract state, a new miner doesn't need to sync the data by replaying the entire blockchain history. Another kind of side-effects is outgoing messages targeting other contracts or blockchains, namely \textbf{Egressing Events}. The ability to post messages to external entities is the building block for contract interoperability. The submitted events are eventually dispatched to the target contract, or other blockchains by the Polkadot ICMP (Interchain Message Passing, https://research.web3.foundation/en/latest/polkadot/ICMP/). Miners (host) are responsible to post the side-effects back to the blockchain.
 \end{enumerate}
 
@@ -212,7 +212,7 @@ As invocation payloads are included in a block, the blockchain is naturally a ca
 
 The downside of the architecture is that the confirmation of the commands happens after the confirmation of the block. The performance of the blockchain becomes the bottleneck for contract invocations. However, the read-only queries are made into the runtime directly and the performance is not bounded by the blockchain. This is possible because the queries don't modify the contract state.
 
-Miners are responsible to ensure the communication between \pruntime and the blockchain. A monitoring scheme is needed to ensure the connectivity. In the worst case (e.g. miner shutdown) the contract execution can be resumed by another miner.
+Miners are responsible to ensure the communication between \pruntime and the blockchain. A monitoring scheme is needed to ensure the connectivity. In the worst case (e.g.\,miner shutdown) the contract execution can be resumed by another miner.
 
 \subsection{State Recover}
 
@@ -237,7 +237,7 @@ Security fallbacks:
 
 \begin{icompact}
     \item Alternative TEE hardware: Though we use Intel SGX as the reference for the current design, we don't make any assumptions about the hardware. Potential TEE hardware includes AMD SEV, ARM Turstzone, and some open-source implementations in progress. When we support any alternatives the different TEE can work together transparently.
-    \item Contract key backup by secret sharing scheme: To avoid catastrophes where Intel SGX breaks entirely (e.g. Intel bans all the Remote Attestation request from our side), we can utilize a secret sharing scheme to distribute the Root Key to the Gatekeepers, or maybe two generations of the Gatekeepers. In such a case, we can wait for the deployment of an alternative TEE system. Then the secret holders can collaborate to ingest the key to recover the execution of Phala Network.
+    \item Contract key backup by secret sharing scheme: To avoid catastrophes where Intel SGX breaks entirely (e.g.\,Intel bans all the Remote Attestation request from our side), we can utilize a secret sharing scheme to distribute the Root Key to the Gatekeepers, or maybe two generations of the Gatekeepers. In such a case, we can wait for the deployment of an alternative TEE system. Then the secret holders can collaborate to ingest the key to recover the execution of Phala Network.
 \end{icompact}
 
 Optimizations:
@@ -272,7 +272,7 @@ pLIBRA is implemented as a confidential contract on Phala Network. It implements
 
 \begin{icompact}
     \item \textbf{Libra Light Client}: A full light client which is capable to validate the Merkle proof of the chain state and sign transactions.
-    \item \textbf{Key Store}: Stores the private keys for the collateral Libra accounts (i.e. \textit{bank account}).
+    \item \textbf{Key Store}: Stores the private keys for the collateral Libra accounts (i.e.\,\textit{bank account}).
     \item \textbf{AccountDB}: Stores the pLIBRA accounts and the balance.
 \end{icompact}
 
