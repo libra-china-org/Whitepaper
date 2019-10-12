@@ -102,7 +102,7 @@ In our system, the executors, i.e., miners, are stateless, which means the lates
 
 All the Worker Nodes are required to be registered on the blockchain before participating in mining or Gatekeeper election.
 
-Remote attestation provides a building block to verify the execution as well as its output of a certain code inside the enclave. Running such remote attestation on each execution is inefficient and can be avoided. In Phala Network we adopt a better protocol in which the attestation is only required once during the registration.
+Remote attestation provides a building block to verify the execution as well as its output of a certain code inside the enclave. However, running such attestation on each execution is time inefficient. In Phala Network we adopt a better protocol. The attestation measures the \pruntime instance and the generated unique identity during the registration, instead of each execution. In this way, a single attestation is sufficient to ensure the future behavior of the \pruntime.
 
 \begin{figure}
     \centering \footnotesize
@@ -112,20 +112,20 @@ Remote attestation provides a building block to verify the execution as well as 
 \end{figure}
 
 \begin{enumerate}
-    \item Worker node $n$ (i.e.\,Miner or Gatekeeper) calls \texttt{pRuntime.GetIdentity} to generate a key pair as an identity $I_n(pk_n, sk_n)$.  $sk_n$ is kept inside the enclave and $pk_n$ is revealed to the node.
+    \item The host program of the worker node $n$ (i.e.\,Miner or Gatekeeper) calls \texttt{pRuntime.GetIdentity} to generate a key pair as an identity $I_n(pk_n, sk_n)$.  $sk_n$ is kept inside the enclave and $pk_n$ is revealed to the host.
 
-    \item The worker node calls \texttt{pRuntime.GetRAQuote} to generate a remote attestation quote $q$ with the commitment to $pk_n$ and other necessary metadata.
+    \item The host calls \texttt{pRuntime.GetRAQuote} to generate a remote attestation quote $q$ with the commitment to $pk_n$ and other necessary metadata.
 
-    \item The worker node submits $q$ to Remote Attestation Service and get the signed quotes $q_{signed}$.
+    \item The host submits $q$ to Remote Attestation Service and get the signed quotes $q_{signed}$.
 
-    \item The worker node submits $(q_{signed}, pk_n)$ to the blockchain. The blockchain then accepts and stores the information after validation.
+    \item The host submits $(q_{signed}, pk_n)$ to the blockchain. The blockchain then accepts and stores the information after validation.
 \end{enumerate}
 
-With the identity registered, a TLS-like channel between the requester and the target \pruntime can be established. The identities published on the blockchain can serve as the PKI to avoid MitM attack. Note that not only the client can talk to \pruntime securely, but a secure channel between two runtime is also possible.
+The registered \pruntime instances are non-Byzantine. The \pruntime instance and the generated identity is measured by the attestation. It implies \pruntime runs in a TEE and the identity is generated securely. Since the privkey is unknown to any party expect the instance, nobody can pretend to be a registered \pruntime.
 
-In a well established TLS connection, the two parties can trust each other without further need of remote attestation. Nobody can pretend to be a registered worker node because the corresponding \pruntime is the only party who has the private key to establish the TLS connection. This trick improves the efficiency and flexibility of code execution in the runtime. It's also widely used in the Phala Network protocol.
+With the identity registered, a TLS-like channel between the requester and the target \pruntime can be established. The identities published on the blockchain serve as the PKI to avoid MitM attack. As the \pruntime is non-Byzantine in such a communication channel, the \pruntime can be trusted without further need of remote attestation.  This trick improves the efficiency and flexibility of code execution in the runtime.
 
-The metadata submitted to the blockchain also contains sufficient information to locate the access endpoint of the worker node, for example, libp2p multiaddrs.
+The metadata contains other necessary information, for example, the network endpoint of the node like libp2p multiaddrs. The registration has an expiration date to prevent vulnerabilities discovered in the future. Worker nodes can renew it by redo the registration process including generating a new identity and do the remote attestation.
 
 \subsection{Blockchain Launch}
 
