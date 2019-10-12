@@ -19,8 +19,6 @@ Phala Network aims to build a platform for general-purpose privacy-preserving Tu
     \item \textbf{Interoperability.}
     Contracts can interoperate with each other and external blockchains.
 \end{icompact}
-% \zhou{We may add inter-operatablity to distinguish our work with Ekiden.}
-% \hang{Added.}
 
 The existing TEE solutions, e.g., Intel SGX, can only prevent the leakage of sensitive information during the execution of \textit{isolated} programs, and provide no guarantee on availability or verification of input data. Thus it requires a carefully-designed infrastructure to integrate TEE into blockchain to meet the requirements above.
 
@@ -91,16 +89,14 @@ There are a few roles involved in the protocol as shown in Figure~\ref{fig:roles
 We first propose an important property which works as the basis of the following system design.
 
 \noindent {\bf All worker nodes are non-Byzantine nodes.}
-As illustrated above, each worker node runs a special program \pruntime, which, as the name suggests, works as the runtime for confidential contracts.
-The \pruntime manages the connections to the blockchain and all the secrets to decrypt the contract states, and deployed contracts can only access these resources via the APIs of \pruntime.
-Since the integrity of \pruntime is guaranteed by the remote attestation service, this isolation promises that no Byzantine fault can happen unless both the TEE and \pruntime are compromised, and an adversarial worker node can only launch a Denial-of-Service attack, which can be further detected by our responsiveness monitoring protocol.
+As illustrated above, each worker node runs a special program \pruntime in its TEE. The \pruntime, as the name suggests, works as the runtime environment for confidential contracts. It exports a set of APIs for the contract to access the state resources, manages the connections to the blockchain and answers user queries securely.
+\pruntime implements the Phala Network protocol described in this paper. Since the integrity of \pruntime is guaranteed by the remote attestation service, this isolation promises that no Byzantine fault can happen unless both the TEE and \pruntime are compromised, and an adversarial worker node can only launch a Denial-of-Service attack, which can be further detected by our responsiveness monitoring protocol.
 
-In our system, the executors, i.e., miners, are stateless, which means the latest state of a confidential contract has to be got by sequentially executing all the input events on the blockchain or from a cached contract state and the events after that. All the inputs have to be first published to the blockchain and in this way, the blockchain works as the canonical source of contract inputs, which implies \textit{Event Sourcing} design pattern. We further utilized the idea of \textit{Command Query Responsibility Segregation} in the design of the protocol to accelerate the users' queries to the contracts.
-% \zhou{We'd better explain these two concepts in Background section.}
+In our system, the executors, i.e., miners, are stateless, which means the latest state of a confidential contract has to be got by sequentially executing all the input events on the blockchain or from a cached contract state and the events after that. All the inputs have to be first published to the blockchain and in this way, the blockchain works as the canonical source of contract inputs, which implies \textit{Event Sourcing} design pattern. We further utilized the idea of \textit{CQRS} in the design of the protocol to accelerate the users' queries to the contracts.
 
-\subsection{Worker Node and pRuntime}
+\pruntime maintains a set of secrets durning its life cycle. Contract states are encrypted and checkpointed on the blockchain with a symmetric key. Each \pruntime registers its identity on the blockchain and establishes secure connections to users with an asymmetric key pair. Since each \pruntime registers itself on the blockchain, any user can validate its identity. These secrets never go outside the \pruntime. 
 
-\hang{todo: explain the position and the responsibility of the runtime}
+
 
 \subsection{Node Registration}
 
