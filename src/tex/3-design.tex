@@ -199,6 +199,8 @@ The Gatekeepers are re-elected in each era according to the election rule (Appen
     \item There's an expiration time for the key rotation procedure in case of the unresponsiveness. In such case, the unresponsive Gatekeepers will be slashed and the procedure should start over.
 \end{enumerate}
 
+All the off-chain key management and encryption is handled by the \pruntime of the Gatekeepers.
+
 The key rotation protocol starts from the first block in an era and ends after the final on-chain confirmation. Durning this period no new contract can be deployed to the miners because the communication between miners and Gatekeepers is blocked. However the delay caused by the protocol is trivial compared with the length of an era. In the best case, the delay is 2 round-trip-time (two on-chain confirmations).
 
 Contract keys can be rotated in a simpler way. The miner generates a new contract key and re-encrypt the states with the new key. Then it can send the new contract key to Gatekeepers in a secure channel, and save the states to the blockchain. The two actions are combined in a single transaction to make then atomic.
@@ -227,7 +229,7 @@ The contract state is determined by the write commands which have multiple sourc
     \item The runtime also produces various side-effects which is accessible by \texttt{pRuntime.DumpSideEffect}. A basic kind of side-effect is the encrypted contract state update produced periodically by \pruntime. With the full contract state, a new miner doesn't need to sync the data by replaying the entire blockchain history. Another kind of side-effects is outgoing messages targeting other contracts or blockchains, namely \textbf{Egressing Events}. The ability to post messages to external entities is the building block for contract interoperability. The submitted events are eventually dispatched to the target contract, or other blockchains by the Polkadot ICMP (Interchain Message Passing, https://research.web3.foundation/en/latest/polkadot/ICMP/). Miners (host) are responsible to post the side-effects back to the blockchain.
 \end{enumerate}
 
-To invoke a contract the user needs to generate a shared secret key with the miner who runs the contract. This can be done via a non-interactive Diffie-Hellman key exchange scheme with her private key and the miner's registered public key (https://www.sqi.at/resources/Schindler-2019-CIW-Distributed-Key-Generation-with-Ethereum-Smart-Contracts.pdf). The key is used for future communication and then the user can submit the encrypted payload to the blockchain. The invocation events are processed by \pruntime once they arrive at the miner node.
+To invoke a contract the user needs to generate a shared secret key with the miner who runs the contract. This can be done via a non-interactive Diffie-Hellman key exchange scheme with her private key and the miner's registered public key~\cite{schindlerdistributed}. The key is used for future communication and then the user can submit the encrypted payload to the blockchain. The invocation events are processed by \pruntime once they arrive at the miner node.
 
 As invocation payloads are included in a block, the blockchain is naturally a canonical source of events. All the contract invocations initiated by users, smart contracts, and other blockchains are timestamped and treated equally by the executor. It therefore makes a unified interface for contract interoperability.
 
@@ -239,7 +241,7 @@ Miners are responsible to ensure the communication between \pruntime and the blo
 
 A single miner is sufficient to run a contract. Though miners are incentivized to run contracts in the long term, the miner may still becomes unresponsive due to network or power outage rarely. In such a case another miner can recover the saved state from the blockchain and resume execution.
 
-As mentioned in section ``Execute the Contract'', one of the side-effects produced by \pruntime  is the periodical contract state update. The dumped state is encrypted by $k_c$ and stored on the blockchain. In the case of miner unavailable, a new miner can recover the latest dumped contract state from the blockchain and decrypt it with $k_c$. After recovering the state, the runtime can further replay the rest of the events on the blockchain until reaches the chain tip.
+As mentioned in section ``Execute the Contract'', one of the side-effects produced by \pruntime is the periodical contract state update. The dumped state is encrypted by $k_{c_i}$ and stored on the blockchain. In the case of miner unavailable, a new miner can recover the latest dumped contract state from the blockchain and decrypt it with $k_{c_i}$. After recovering the state, the runtime can further replay the rest of the events on the blockchain until reaches the chain tip.
 
 \subsection{Responsiveness Monitoring}
 
