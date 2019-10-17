@@ -199,6 +199,8 @@ The Gatekeepers are re-elected in each era according to the election rule (Appen
     \item There's an expiration time for the key rotation procedure in case of the unresponsiveness. In such case, the unresponsive Gatekeepers will be slashed and the procedure should start over.
 \end{enumerate}
 
+All the off-chain key management and encryption is handled by the \pruntime of the Gatekeepers.
+
 The key rotation protocol starts from the first block in an era and ends after the final on-chain confirmation. Durning this period no new contract can be deployed to the miners because the communication between miners and Gatekeepers is blocked. However the delay caused by the protocol is trivial compared with the length of an era. In the best case, the delay is 2 round-trip-time (two on-chain confirmations).
 
 Contract keys can be rotated in a simpler way. The miner generates a new contract key and re-encrypt the states with the new key. Then it can send the new contract key to Gatekeepers in a secure channel, and save the states to the blockchain. The two actions are combined in a single transaction to make then atomic.
