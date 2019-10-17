@@ -107,7 +107,7 @@ Remote attestation provides a building block to verify the execution as well as 
 \begin{figure}
     \centering \footnotesize
     \includegraphics[width=.7\columnwidth]{img/pLIBRA-communication}
-    \caption{RA and communication. \zhou{as commented by W3F guy: there can be man-in-the-middle attack between user and miner so we need some certificate-like mechanism to prove the identity of miner, I think RA receipt just acts as certificate in our system.}}
+    \caption{RA and communication.}
     \label{fig:communication}
 \end{figure}
 
@@ -256,10 +256,11 @@ where $c_n$ is the activity counter for node $n$ and $n'$ is all the connected w
 
 \section{Open Question}
 
-Security fallbacks:
+Security improvements:
 
 \begin{icompact}
     \item Alternative TEE hardware: Though we use Intel SGX as the reference for the current design, we don't make any assumptions about the hardware. Potential TEE hardware includes AMD SEV, ARM Turstzone, and some open-source implementations in progress. When we support any alternatives the different TEE can work together transparently.
+    \item Threshold key sharing on Gatekeeper root keys: The confidentiality of all the confidential contracts is derived from the root key. However root keys are replicated among all the Gatekeepers in current design, meaning a compromised TEE could compromise the whole system. A more robust ways is to apply a threshold secret sharing scheme (e.g. Shamir's) on the root key. A distributed key generation scheme (DKG) can be used instead of selecting a leader to generate the key in the key rotation protocol.
     \item Contract key backup by secret sharing scheme: To avoid catastrophes where Intel SGX breaks entirely (e.g.\,Intel bans all the Remote Attestation request from our side), we can utilize a secret sharing scheme to distribute the Root Key to the Gatekeepers, or maybe two generations of the Gatekeepers. In such a case, we can wait for the deployment of an alternative TEE system. Then the secret holders can collaborate to ingest the key to recover the execution of Phala Network.
 \end{icompact}
 
@@ -267,6 +268,7 @@ Optimizations:
 
 \begin{icompact}
     % \item Event batching & async state commitment
+    \item Redundant miners for a contract: Currently one contract is only associated with one miner. The state recovery still takes some time though the availability is guaranteed. With >1 miners, as the contract execution is deterministic, the miners can compete to run the contract and checkpoint the states on the blockchain. The blockchain can always accept new states and reject redundant submissions.
     \item State storage prune
     \item Layer 2 state sharing
 \end{icompact}
