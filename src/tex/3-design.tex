@@ -165,40 +165,47 @@ Periodical key rotation is necessary for forward secrecy. The root key at era $n
 
 \subsection{Deploy Worker Nodes}
 
-Both Miners and Gatekeepers have to follow the ``Node Registration'' scheme to join the network. To ensure the service quality, all the worker nodes must stake a certain amount of the Phala token and \textbf{could be slashed} once it fails to meet the responsive requirements. We will discuss the details about staking and monitoring in ``Responsiveness Monitoring'' section.
+Both miners and Gatekeepers have to follow the ``Node Registration'' scheme to join the network. The protocol ensures the nodes are non-Byzantine. So we only consider responsiveness failures. To ensure the service quality, all the worker nodes must stake a certain amount of the Phala token and \textbf{could be slashed} once it fails to meet the responsive requirements. We will discuss the details about staking and monitoring in ``Responsiveness Monitoring'' section.
 
 As Gatekeepers store the root key and need to be always online, they have to meet a higher standard and need to stake a larger amount. They are rewarded for keeping online and could be slashed otherwise.
 
-\zhou{I quote the question here ``Some more details of how you detect bad behaviour would be good. Are there further attestations involved? Responsiveness is only one aspect of 'bad' behaviour''.}
+
 
 \subsection{Deploy the Contract}
 
-The bytecode of the compiled contract is published on the blockchain and then loaded by a user-specified miner. The Gatekeepers generate a symmetric encryption key for each newly published contract. The key is shared with the corresponding miner for state encryption. More specifically:
+The bytecode of the compiled contract is published on the blockchain and then loaded by a user-specified miner to its \pruntime. The Gatekeepers generate a symmetric encryption key for each newly published contract. The key is shared with the corresponding \pruntime for state encryption. More specifically:
 
 \begin{enumerate}
-    \item The developer publish the contract to the blockchain
-    \item Once Gatekeepers notice the contract, they generate a corresponding contract key $k_c$ for contract state encryption
-    \item Gatekeepers save $k_c$ to the blockchain as a part of the chainstate encrypted with Root Key $k_r$
+    \item The developer publish the contract $c_i$ to the blockchain
+    \item Once Gatekeepers notice the publish of $c_i$, they generate a corresponding contract key $k_{c_i}$ for contract states encryption. 
+    \item Gatekeepers save $k_{c_i}$ to the blockchain as a part of the chainstate encrypted with Root Key $k_r^{(n)}$
     \item The developer finds an available miner to load the contract. The developer can either run his miner so that no extra fee is needed, or rent one from a resource market (see ``Economic Design Paper'' for more details).
-    \item The miner runtime connects to Gatekeeper through a TLS connection and asks for $k_c$ by \texttt{pRuntime.GetContractKey}.
+    \item The miner runtime connects to Gatekeeper through a secure connection and asks for $k_{c_i}$ by \texttt{pRuntime.GetContractKey}.
 \end{enumerate}
 
-The miner's \pruntime will use $k_c$ to encrypt the contract state and save it to the blockchain periodically. We will discuss the details in ``Execute the Contract'' and ``State Recover'' section.
+The miner's \pruntime will use $k_{c_i}$ to encrypt the contract state and save it to the blockchain periodically. We will discuss the details in ``Execute the Contract'' and ``State Recover'' section.
+
+
 
 \subsection{Key Rotation}
 
-The Gatekeepers are re-elected periodically according to the election rule (Appendix II). Let $G_{n-1}$ and $G_n$ be the Gatekeepers set before and after the election at round $n$. The root keys will be rotated as follows:
+The Gatekeepers are re-elected in each era according to the election rule (Appendix II). While rotating the Gatekeepers, the root key is also rotated. Let $G_{n-1}$ and $G_n$ be the Gatekeepers set before and after the election at era $n$. The root key will be rotated as follows:
 
 \begin{enumerate}
-    \item The old Gatekeeper set $G_{n-1}$ validates the new set $G_n$
-    \item $G_{n-1}$ decrypts the state of the Gatekeepers with the old root key $k_r^{(n-1)}$
-    \item $G_n$ generates a new root key $k_r^{(n)}$ and retrieve the state from $G_{n-1}$
-    \item $G_n$ encrypts the state with $k_r^{(n)}$ and stores it to the blockchain
-    \item The runtime of the retired Gatekeepers will halt and destroy $k_r^{(n-1)}$
-    \item $G_n$ generates new contract keys and notify the miner to rotate the keys. Miners' runtime then will ask $G_n$ for contract key by \texttt{pRuntime.GateContractKey}
+    \item $G_n$ is elected on-chain by the governance module in the last block of each era. Simultaneously two leaders $l_{n-1} \in G_{n-1}$ and $l_n \in G_n$ are randomly chosen. The randomness comes from the random beacon in the block.
+    \item Any communication between miners and Gatekeepers is blocked until the key rotation is done.
+    \item Once the block is finalized, $l_{n-1}$ and $l_n$ collaboratively generate the next root key $k_r^{(n)}$ by a DH-like key exchange protocol with salts. $l_{n-1}$ decrypts the Gatekeeper states and re-encrypt with $k_r^{(n)}$ and save it to the blockchain. $l_n$ broadcasts $k_r^{(n)}$ to other members in $G_n$ by a secure communication channel. $G_n$ members will confirm the readiness on-chain when they received $k_r^{(n)}$.
+    \item Once all the $G_n$ members have confirmed and $l_{n-1}$ has updated the Gatekeeper states, the blockchain will generate a ``Key Rotation Ready'' event so that miners can resume the communication with the new Gatekeepers. Simultaneously the $G_{n-1}$ members who are not still in $G_n$ will notice the event and perform self destruction.
+    \item There's an expiration time for the key rotation procedure in case of the unresponsiveness. In such case, the unresponsive Gatekeepers will be slashed and the procedure should start over.
 \end{enumerate}
 
+The key rotation protocol starts from the first block in an era and ends after the final on-chain confirmation. Durning this period no new contract can be deployed to the miners because the communication between miners and Gatekeepers is blocked. However the delay caused by the protocol is trivial compared with the length of an era. In the best case, the delay is 2 round-trip-time (two on-chain confirmations).
+
+Contract keys can be rotated in a simpler way. The miner generates a new contract key and re-encrypt the states with the new key. Then it can send the new contract key to Gatekeepers in a secure channel, and save the states to the blockchain. The two actions are combined in a single transaction to make then atomic.
+
 Root key and contract key rotation ensures the forward secrecy of the confidential state (for both Gatekeeper state and contracts state). The keys for the obsolete data are destroyed once the rotation is done.
+
+
 
 \subsection{Execute the Contract}
 
