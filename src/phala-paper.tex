@@ -1,0 +1,78 @@
+% \documentclass[draft,conference]{IEEEtran}
+% \pagestyle{plain}
+% \makeatletter
+% \def\endthebibliography{%
+%   \def\@noitemerr{\@latex@warning{Empty `thebibliography' environment}}%
+%   \endlist
+% }
+% \makeatother
+
+\documentclass{article}
+
+\usepackage[hyphens]{url}
+\usepackage{amsmath}
+
+\newenvironment{icompact}{
+  \begin{list}{$\bullet$}{
+    \parsep 0pt plus 1pt
+    \partopsep 0pt plus 1pt
+    \topsep 2pt plus 1pt minus 1pt
+    \itemsep 0pt plus 0pt
+    \parskip 0pt plus 2pt
+    \leftmargin 0.15in}}
+  {\normalsize\end{list}}
+
+\newcommand{\pruntime}{\texttt{pRuntime}\xspace}
+
+% For Publication
+% \newcommand{\zsf}[1]{{#1}}
+% \def\zhou#1{#1}
+
+% For Draft
+\newcommand{\zsf}[1]{\textcolor{green!50!black}{#1}}
+\usepackage{xspace}
+\usepackage{todonotes}
+\def\zhou#1{\todo[inline,backgroundcolor=yellow]{{\bf Comments from sfzhou:} #1}\xspace}
+\def\hang#1{\todo[inline,backgroundcolor=pink]{{\bf Comments from hang:} #1}\xspace}
+
+\begin{document}
+\title{Phala Network: A Confidential Smart Contract Network Based on Polkadot}
+
+\author{
+    %     \IEEEauthorblockN{Hang Yin}
+    %     \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+    %         \textit{name of organization (of Aff.)}\\
+    %         City, Country \\
+    %         email address}
+    %     \and
+    %     \IEEEauthorblockN{Shunfan Zhou}
+    %     \IEEEauthorblockA{
+    %         Fudan University \\
+    %         % \textit{name of organization (of Aff.)}\\
+    %         % City, Country \\
+    %         sfzhou17@fudan.edu.cn}
+    %     \and
+    %     \IEEEauthorblockN{Jun Jiang}
+    %     \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+    %         \textit{name of organization (of Aff.)}\\
+    %         City, Country \\
+    %         email address}
+    Hang Yin
+    \and
+    Shunfan Zhou
+    \and
+    Jun Jiang
+}
+
+\maketitle
+
+% \input{tex/0-abstract.tex}
+
+\input{tex/1-introduction.tex}
+\input{tex/2-background.tex}
+\input{tex/3-design.tex}
+
+\input{tex/reference.tex}
+\input{tex/appendix.tex}
+
+\end{document}

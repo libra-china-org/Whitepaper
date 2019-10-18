@@ -1,0 +1,50 @@
+\clearpage
+\appendix
+
+\section{pRuntime}
+
+% ```c++
+% class pRuntime {
+%  public:  // global accessible
+
+%   // identity
+%   Pubkey Bootstrap();
+%   Pubkey GetIdentity();
+%   Quote GetRAQuote();
+%   // state sync
+%   SyncState GetBlockchainSyncState();
+%   SyncResult SyncBlockchain(BlockchainUpdate update);
+%   SideEffectUpdates DumpSideEffect();
+%   // contracts
+%   QueryResponse Query(Hash contract_id, QueryRequest request);
+
+%  protected:  // inter-runtime accessible
+
+%   Key GetRootKey();
+%   Key GetContractKey(Hash contract_id);
+
+%  private:  // internal accessible
+
+%   Privkey id_sk;
+%   Key root_key;  // gatekeeper only
+%   map<Hash, Key> gatekeeper_contract_keys;  // gatekeeper only
+%   map<Hash, Key> miner_known_cotract_keys;  // miner only
+%   ChainState state;
+% }
+% ```
+
+\section{Gatekeeper Election}
+
+(WIP)
+
+\section{Network Parameters}
+
+(WIP)
+
+% ```c++
+% // default
+% int GATEKEEPER_SECRET_THRESHOLD = 17;
+% int GATEKEEPER_SIZE = 21;
+% int GATEKEEPER_ROOTKEY_ROTATE_HOURS = 24;
+% int CONTRACT_KEY_ROTATE_HOURS = 24;
+% ```
