@@ -1,7 +1,5 @@
-# Whitepaper
+# Depreated
 
-This repo hosts the whitepaper of Phala Network and pLIBRA.
+Please check:
 
-Rendered PDFs:
-
-* [Phala Network](./pdf/phala-network-whitepaper.pdf)
+* [Phala Network/Whitepaper](https://github.com/Phala-Network/Whitepaper)
